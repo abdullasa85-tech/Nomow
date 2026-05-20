@@ -3,47 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Devency — Restaurant Menu Design</title>
+<title>Devency — Restaurant Menu Design & Qairty Digital Menus</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --cream:#F5F0E8;--cream2:#EDE7D9;
-  --ink:#1A1814;--ink2:#2E2B25;--muted:#7A7265;
-  --gold:#B8964E;--gold2:#D4AF6E;--gold3:#8B6D32;
-  --white:#FDFCF9;
-  --border:rgba(184,150,78,.18);--border2:rgba(184,150,78,.35);
-  --serif:'Playfair Display',Georgia,serif;
-  --sans:'Jost',sans-serif;
+  --obsidian:#0A0906;
+  --obsidian2:#141210;
+  --obsidian3:#1E1B17;
+  --obsidian4:#28241F;
+  --cream:#F8F3EB;
+  --cream2:#EDE5D6;
+  --cream3:#DDD2BE;
+  --amber:#C8872A;
+  --amber2:#E5A84E;
+  --amber3:#F2C870;
+  --amber-faint:rgba(200,135,42,0.07);
+  --amber-soft:rgba(200,135,42,0.15);
+  --amber-mid:rgba(200,135,42,0.35);
+  --amber-strong:rgba(200,135,42,0.6);
+  /* Qairty — distinct identity */
+  --q-teal:#0D2E2A;
+  --q-teal2:#1A4A43;
+  --q-teal3:#2A6B60;
+  --q-mint:#3DBFAA;
+  --q-mint2:#5ED4C2;
+  --q-mint-faint:rgba(61,191,170,0.07);
+  --q-mint-soft:rgba(61,191,170,0.15);
+  --q-mint-mid:rgba(61,191,170,0.35);
+  --white:#FEFCF8;
+  --muted:#9A8E7E;
+  --muted2:#6B6055;
+  --border:rgba(200,135,42,0.12);
+  --border2:rgba(200,135,42,0.3);
+  --border3:rgba(200,135,42,0.55);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'DM Sans',sans-serif;
   --arabic:'Noto Naskh Arabic',serif;
   --ease:cubic-bezier(.22,1,.36,1);
-}
-html{scroll-behavior:smooth}
-body{
-  font-family:var(--sans);background:var(--cream);color:var(--ink);
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
-  direction:ltr; /* NEVER changes — layout always left-to-right */
+  --ease2:cubic-bezier(.4,0,.2,1);
 }
 
-/* ═══ LANGUAGE SYSTEM ═══
-   ONLY text content changes.
-   Layout, direction, header — NEVER change.
-   Each element has ONE visible [data-t] child at a time.
-═══════════════════════════════════════════ */
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--obsidian);
+  color:var(--cream);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ══ LANGUAGE ══ */
 [data-t]{display:none}
-/* English (default) */
 [data-t="en"]{display:inline}
-/* Arabic */
 body[data-lang="ar"] [data-t="en"]{display:none}
 body[data-lang="ar"] [data-t="ar"]{display:inline}
-/* German */
 body[data-lang="de"] [data-t="en"]{display:none}
 body[data-lang="de"] [data-t="de"]{display:inline}
-/* Arabic font always applies to AR spans */
 [data-t="ar"]{font-family:var(--arabic)}
-/* block-text: children become block instead of inline */
 .bt [data-t]{display:none}
 .bt [data-t="en"]{display:block}
 body[data-lang="ar"] .bt [data-t="en"]{display:none}
@@ -51,233 +70,1243 @@ body[data-lang="ar"] .bt [data-t="ar"]{display:block}
 body[data-lang="de"] .bt [data-t="en"]{display:none}
 body[data-lang="de"] .bt [data-t="de"]{display:block}
 
-/* ═══ NAV ═══ */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;background:rgba(245,240,232,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:padding .4s var(--ease),background .4s var(--ease)}
-nav.scrolled{padding:1rem 3rem;background:rgba(245,240,232,.97)}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
-.logo-mark{width:38px;height:38px;border:1.5px solid var(--gold);border-radius:2px;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
-/* HOW TO ADD LOGO: inside .logo-mark add:
-   <img src="logo.png" style="width:100%;height:100%;object-fit:contain;padding:5px">
-   then remove the ::before rule below */
-.logo-mark::before{content:'D';font-family:var(--serif);font-size:20px;color:var(--gold)}
-.logo-text-block{display:flex;flex-direction:column;line-height:1}
-.logo-name{font-family:var(--serif);font-size:15px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
-.logo-tagline{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-top:2px}
+/* ══ GRAIN ══ */
+body::after{
+  content:'';position:fixed;inset:0;z-index:1000;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.028;mix-blend-mode:overlay;
+}
+
+/* ══ ANNOUNCEMENT BAR ══ */
+.ann-bar{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  background:linear-gradient(90deg,var(--amber),var(--amber2),var(--amber));
+  background-size:200% 100%;
+  animation:barShimmer 4s ease-in-out infinite;
+  padding:.55rem 2rem;
+  display:flex;align-items:center;justify-content:center;gap:1.5rem;
+}
+@keyframes barShimmer{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
+.ann-bar-text{
+  font-size:12px;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--obsidian);
+  display:flex;align-items:center;gap:.6rem;
+}
+.ann-bar-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--obsidian);opacity:.5;
+}
+.ann-bar a{
+  color:var(--obsidian);font-size:11px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;border-bottom:1px solid rgba(10,9,6,.4);
+  padding-bottom:1px;transition:opacity .2s;
+}
+.ann-bar a:hover{opacity:.7}
+.ann-bar-close{
+  position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;
+  color:var(--obsidian);opacity:.5;font-size:16px;line-height:1;
+  transition:opacity .2s;
+}
+.ann-bar-close:hover{opacity:1}
+
+/* ══ NAV ══ */
+nav{
+  position:fixed;top:36px;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 3.5rem;
+  transition:all .5s var(--ease);
+}
+nav.scrolled{
+  top:0;padding:1rem 3.5rem;
+  background:rgba(10,9,6,.95);
+  backdrop-filter:blur(30px) saturate(1.5);
+  -webkit-backdrop-filter:blur(30px) saturate(1.5);
+  border-bottom:1px solid var(--border);
+}
+.ann-hidden nav{top:0}
+.nav-logo{display:flex;align-items:center;gap:14px;text-decoration:none}
+.logo-mark{
+  width:40px;height:40px;
+  border:1px solid var(--amber-mid);border-radius:3px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(200,135,42,.08),transparent);
+  transition:border-color .3s;
+}
+.nav-logo:hover .logo-mark{border-color:var(--amber)}
+.logo-mark-inner{
+  font-family:var(--serif);font-size:20px;font-weight:400;
+  color:var(--amber2);font-style:italic;
+  position:relative;z-index:1;
+}
+.logo-text{display:flex;flex-direction:column;gap:3px}
+.logo-name{
+  font-family:var(--serif);font-size:16px;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--cream);
+  line-height:1;
+}
+.logo-tag{
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--amber);font-weight:400;opacity:.65;line-height:1;
+}
 .nav-links{display:flex;align-items:center;gap:2.5rem}
-.nav-links a{font-size:12px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .25s}
-.nav-links a:hover{color:var(--ink)}
-.nav-right{display:flex;align-items:center;gap:1.5rem}
-.lang-switcher{display:flex;gap:4px}
-.lang-btn{font-size:11px;font-weight:400;letter-spacing:.08em;color:var(--muted);cursor:pointer;padding:4px 9px;border:1px solid transparent;border-radius:1px;background:none;transition:all .2s;font-family:var(--sans)}
-.lang-btn.active,.lang-btn:hover{border-color:var(--border2);color:var(--ink)}
-.nav-cta{padding:10px 22px;background:var(--gold);color:var(--white);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:1px;cursor:pointer;text-decoration:none;transition:all .3s var(--ease);white-space:nowrap}
-.nav-cta:hover{background:var(--gold3);transform:translateY(-1px)}
+.nav-links a{
+  font-size:11.5px;font-weight:400;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(248,243,235,.38);
+  text-decoration:none;transition:color .3s;position:relative;padding:4px 0;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:1px;background:var(--amber);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .35s var(--ease);
+}
+.nav-links a:hover{color:var(--cream)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-links a.qairty-link{color:var(--q-mint)!important}
+.nav-links a.qairty-link::after{background:var(--q-mint)}
+.nav-right{display:flex;align-items:center;gap:1.2rem}
+.lang-switcher{display:flex;gap:2px}
+.lang-btn{
+  font-size:10.5px;font-weight:400;letter-spacing:.06em;
+  color:rgba(248,243,235,.3);cursor:pointer;
+  padding:5px 9px;border:1px solid transparent;
+  border-radius:2px;background:none;
+  transition:all .25s;font-family:var(--sans);
+}
+.lang-btn.active,.lang-btn:hover{
+  border-color:var(--border2);color:var(--amber2);
+}
+.nav-cta{
+  padding:10px 24px;
+  background:linear-gradient(135deg,var(--amber),var(--amber2));
+  color:var(--obsidian);font-size:11px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  border:none;border-radius:2px;cursor:pointer;
+  text-decoration:none;transition:all .35s var(--ease);
+  white-space:nowrap;box-shadow:0 4px 18px rgba(200,135,42,.22);
+}
+.nav-cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(200,135,42,.38);
+}
 
-/* ═══ HERO ═══ */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10rem 2rem 7rem;background:var(--white);position:relative;overflow:hidden}
-.hero-bg{position:absolute;font-family:var(--serif);font-size:clamp(10rem,22vw,22rem);font-weight:400;color:rgba(184,150,78,.048);letter-spacing:-.04em;pointer-events:none;user-select:none;line-height:1;top:50%;transform:translateY(-50%);white-space:nowrap}
-.hero>*{position:relative;z-index:1}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:12px;margin-bottom:2.2rem}
-.eyebrow-line{width:32px;height:1px;background:var(--gold);opacity:.5}
-.eyebrow-text{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
-.hero-h1{font-family:var(--serif);font-size:clamp(2.8rem,7vw,5.8rem);font-weight:400;line-height:1.08;letter-spacing:-.01em;color:var(--ink);margin-bottom:1.8rem}
-.hero-h1 em{font-style:italic;color:var(--gold)}
-.hero-sub{font-size:16px;font-weight:300;color:var(--muted);line-height:1.9;max-width:520px;margin:0 auto 3rem}
-.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn-gold{padding:15px 40px;background:var(--gold);color:var(--white);font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:1px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .35s var(--ease)}
-.btn-gold:hover{background:var(--gold3);transform:translateY(-2px)}
-.btn-ghost{padding:14px 40px;background:transparent;color:var(--ink);font-family:var(--sans);font-size:12px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--border2);border-radius:1px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s var(--ease)}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-.hero-scroll{margin-top:5rem;display:flex;flex-direction:column;align-items:center;gap:8px}
-.scroll-line{width:1px;height:52px;background:linear-gradient(to bottom,var(--gold),transparent);opacity:.5;animation:spulse 2s ease-in-out infinite}
-.scroll-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);opacity:.45}
-@keyframes spulse{0%,100%{opacity:.25}50%{opacity:.65}}
+/* ══ HERO ══ */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:10rem 2rem 8rem;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% -10%,rgba(200,135,42,.09) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 40% at 15% 90%,rgba(13,46,42,.3) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 30% at 85% 85%,rgba(200,135,42,.04) 0%,transparent 50%),
+    var(--obsidian);
+}
+/* Decorative lines */
+.hero-line-v{
+  position:absolute;top:0;bottom:0;
+  width:1px;
+  background:linear-gradient(to bottom,transparent 0%,rgba(200,135,42,.08) 30%,rgba(200,135,42,.08) 70%,transparent 100%);
+  pointer-events:none;
+}
+.hero-line-v:nth-child(1){left:15%}
+.hero-line-v:nth-child(2){left:85%}
+.hero-line-h{
+  position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,135,42,.08),transparent);
+  pointer-events:none;
+}
+.hero-line-h:nth-child(3){top:30%}
+.hero-line-h:nth-child(4){top:70%}
+.hero-corner{
+  position:absolute;width:60px;height:60px;
+  border-color:rgba(200,135,42,.2);border-style:solid;
+  pointer-events:none;
+}
+.hero-corner.tl{top:8%;left:8%;border-width:1px 0 0 1px}
+.hero-corner.tr{top:8%;right:8%;border-width:1px 1px 0 0}
+.hero-corner.bl{bottom:12%;left:8%;border-width:0 0 1px 1px}
+.hero-corner.br{bottom:12%;right:8%;border-width:0 1px 1px 0}
+.hero>*{position:relative;z-index:2}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:18px;
+  margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp .8s .2s var(--ease) forwards;
+}
+.ey-line{width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--amber));opacity:.5}
+.ey-line.r{background:linear-gradient(90deg,var(--amber),transparent)}
+.ey-text{
+  font-size:10.5px;font-weight:400;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--amber2);
+}
+.hero-h1{
+  font-family:var(--serif);
+  font-size:clamp(3.2rem,8.5vw,7.5rem);
+  font-weight:300;line-height:1.0;letter-spacing:-.01em;
+  color:var(--cream);margin-bottom:2rem;
+  opacity:0;animation:fadeUp .9s .35s var(--ease) forwards;
+}
+.hero-h1 em{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--amber2),var(--amber3),var(--amber2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  font-size:17px;font-weight:300;color:rgba(248,243,235,.5);
+  line-height:1.95;max-width:580px;margin:0 auto 3.5rem;
+  opacity:0;animation:fadeUp .9s .5s var(--ease) forwards;
+}
+.hero-actions{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .9s .65s var(--ease) forwards;
+  margin-bottom:5rem;
+}
+.btn-primary{
+  padding:16px 44px;
+  background:linear-gradient(135deg,var(--amber),var(--amber2));
+  color:var(--obsidian);font-size:11.5px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;
+  border:none;border-radius:2px;cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  transition:all .4s var(--ease);
+  box-shadow:0 6px 28px rgba(200,135,42,.28);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(200,135,42,.42)}
+.btn-outline{
+  padding:15px 44px;background:transparent;
+  color:var(--cream);font-size:11.5px;font-weight:300;
+  letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid rgba(248,243,235,.18);border-radius:2px;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  transition:all .35s var(--ease);
+}
+.btn-outline:hover{border-color:var(--amber);color:var(--amber)}
+.btn-qairty{
+  padding:16px 44px;
+  background:linear-gradient(135deg,var(--q-teal2),var(--q-teal3));
+  color:var(--cream);font-size:11.5px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;
+  border:none;border-radius:2px;cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  transition:all .4s var(--ease);
+  box-shadow:0 6px 28px rgba(13,46,42,.5);
+}
+.btn-qairty:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(61,191,170,.3)}
+/* Two-product hero cards */
+.hero-product-cards{
+  display:flex;gap:1px;
+  border:1px solid var(--border);border-radius:6px;overflow:hidden;
+  opacity:0;animation:fadeUp .9s .75s var(--ease) forwards;
+  max-width:780px;margin:0 auto;
+}
+.hpc{
+  flex:1;padding:2rem 2.2rem;position:relative;overflow:hidden;
+  cursor:pointer;transition:background .3s;text-align:left;
+  text-decoration:none;display:block;
+}
+.hpc-print{
+  background:linear-gradient(160deg,var(--obsidian2),var(--obsidian3));
+}
+.hpc-print:hover{background:var(--obsidian3)}
+.hpc-qairty{
+  background:linear-gradient(160deg,rgba(13,46,42,.8),rgba(26,74,67,.6));
+  border-left:1px solid rgba(61,191,170,.1);
+}
+.hpc-qairty:hover{background:linear-gradient(160deg,rgba(13,46,42,.95),rgba(42,107,96,.7))}
+.hpc-label{
+  font-size:9.5px;font-weight:500;letter-spacing:.25em;
+  text-transform:uppercase;margin-bottom:.7rem;
+  display:flex;align-items:center;gap:7px;
+}
+.hpc-print .hpc-label{color:var(--amber2)}
+.hpc-qairty .hpc-label{color:var(--q-mint)}
+.hpc-dot{width:5px;height:5px;border-radius:50%;animation:blink 2s ease-in-out infinite}
+.hpc-print .hpc-dot{background:var(--amber2)}
+.hpc-qairty .hpc-dot{background:var(--q-mint);box-shadow:0 0 8px var(--q-mint)}
+.hpc-title{
+  font-family:var(--serif);font-size:1.5rem;font-weight:400;
+  color:var(--cream);margin-bottom:.5rem;
+}
+.hpc-desc{font-size:13px;font-weight:300;color:rgba(248,243,235,.45);line-height:1.6}
+.hpc-price{
+  font-family:var(--serif);font-size:1.1rem;font-weight:300;
+  margin-top:1rem;
+}
+.hpc-print .hpc-price{color:var(--amber2)}
+.hpc-qairty .hpc-price{color:var(--q-mint2)}
+.hpc-arrow{
+  position:absolute;bottom:1.5rem;right:1.5rem;
+  font-size:18px;opacity:.3;transition:all .3s;
+}
+.hpc:hover .hpc-arrow{opacity:1;transform:translateX(4px)}
+.hpc-print .hpc-arrow{color:var(--amber)}
+.hpc-qairty .hpc-arrow{color:var(--q-mint)}
+.hero-scroll{
+  position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  opacity:0;animation:fadeUp 1s 1s var(--ease) forwards;z-index:2;
+}
+.scroll-line{
+  width:1px;height:55px;
+  background:linear-gradient(to bottom,var(--amber),transparent);
+  opacity:.3;animation:scrollPulse 2.5s ease-in-out infinite;
+}
+@keyframes scrollPulse{0%{opacity:.1;transform:scaleY(.7)}50%{opacity:.4}100%{opacity:.1;transform:scaleY(.7)}}
+.scroll-label{font-size:9.5px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
 
-/* ═══ TRUST ═══ */
-.trust{background:var(--ink);padding:1.7rem 0}
-.trust-inner{display:flex;justify-content:center;align-items:center;max-width:1100px;margin:0 auto;padding:0 3rem}
-.trust-item{flex:1;text-align:center;font-size:11px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.4);padding:0 1.5rem;border-right:1px solid rgba(255,255,255,.06)}
-.trust-item:last-child{border-right:none}
-.trust-item span.label{display:block;font-size:10px;color:var(--gold2);opacity:.65;margin-bottom:4px;letter-spacing:.05em}
+/* ══ SOCIAL PROOF STRIP ══ */
+.proof-strip{
+  background:var(--obsidian2);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:2rem 0;position:relative;overflow:hidden;
+}
+.proof-strip::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--amber),transparent);opacity:.2;
+}
+.proof-inner{
+  max-width:1200px;margin:0 auto;padding:0 3.5rem;
+  display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+}
+.proof-item{
+  padding:0 2rem;text-align:center;
+  border-right:1px solid rgba(200,135,42,.08);
+  display:flex;flex-direction:column;gap:5px;
+  align-items:center;
+}
+.proof-item:last-child{border-right:none}
+.proof-num{
+  font-family:var(--serif);font-size:1.6rem;font-weight:300;
+  color:var(--amber2);line-height:1;
+}
+.proof-label{
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(248,243,235,.3);font-weight:400;
+}
 
-/* ═══ LAYOUT ═══ */
-section{padding:7rem 0}
-.container{max-width:1180px;margin:0 auto;padding:0 3rem}
-.container-sm{max-width:820px;margin:0 auto;padding:0 3rem}
-.section-header{text-align:center;margin-bottom:5rem}
-.section-label{font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:block;opacity:.8}
-.section-h2{font-family:var(--serif);font-size:clamp(2rem,3.5vw,3rem);font-weight:400;line-height:1.2;color:var(--ink)}
-.section-h2 em{font-style:italic;color:var(--gold)}
+/* ══ LAYOUT ══ */
+section{padding:8rem 0}
+.container{max-width:1220px;margin:0 auto;padding:0 3.5rem}
+.container-sm{max-width:860px;margin:0 auto;padding:0 3.5rem}
+.sec-label{
+  font-size:10px;font-weight:400;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--amber);
+  margin-bottom:1.4rem;display:block;opacity:.65;
+}
+.sec-h2{
+  font-family:var(--serif);
+  font-size:clamp(2.2rem,4vw,3.5rem);
+  font-weight:300;line-height:1.12;color:var(--cream);
+}
+.sec-h2 em{font-style:italic;color:var(--amber2)}
+.sec-h2.qairty-h2 em{color:var(--q-mint2)}
 
-/* ═══ STORY ═══ */
-.story{background:var(--cream)}
-.story-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:6rem;align-items:center}
-.story-label{font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;opacity:.8}
-.story-h2{font-family:var(--serif);font-size:clamp(2rem,3.5vw,3rem);font-weight:400;line-height:1.2;color:var(--ink);margin-bottom:1.5rem}
-.story-h2 em{font-style:italic;color:var(--gold)}
-.story-p{font-size:15px;font-weight:300;color:var(--muted);line-height:1.95;margin-bottom:1rem}
-.story-figures{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border2);border-radius:4px;overflow:hidden}
-.fig{padding:2.2rem 1.5rem;background:var(--white);text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+/* ══ TWO-PRODUCT INTRO ══ */
+.two-products{
+  background:var(--obsidian);padding:7rem 0;
+  border-bottom:1px solid var(--border);
+}
+.tp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.tp-col{padding:4rem 3.5rem;position:relative;overflow:hidden}
+.tp-col-print{background:var(--obsidian2)}
+.tp-col-qairty{
+  background:linear-gradient(160deg,rgba(13,46,42,.6),var(--obsidian2));
+}
+.tp-col-print::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--amber),var(--amber2),transparent);
+}
+.tp-col-qairty::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--q-mint),var(--q-mint2),transparent);
+}
+.tp-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:9.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+  margin-bottom:1.5rem;
+}
+.tp-col-print .tp-badge{color:var(--amber2)}
+.tp-col-qairty .tp-badge{color:var(--q-mint)}
+.tp-num{
+  font-family:var(--serif);font-size:5rem;font-weight:300;
+  font-style:italic;line-height:1;margin-bottom:1.2rem;
+}
+.tp-col-print .tp-num{color:rgba(200,135,42,.15)}
+.tp-col-qairty .tp-num{color:rgba(61,191,170,.15)}
+.tp-title{
+  font-family:var(--serif);font-size:2rem;font-weight:300;
+  color:var(--cream);margin-bottom:1rem;
+}
+.tp-desc{
+  font-size:14.5px;font-weight:300;color:rgba(248,243,235,.48);
+  line-height:1.9;margin-bottom:1.8rem;
+}
+.tp-from{
+  font-family:var(--serif);font-size:1.4rem;font-weight:300;margin-bottom:1.6rem;
+}
+.tp-col-print .tp-from{color:var(--amber2)}
+.tp-col-qairty .tp-from{color:var(--q-mint)}
+.tp-list{list-style:none;margin-bottom:2rem}
+.tp-list li{
+  font-size:13px;font-weight:300;color:rgba(248,243,235,.5);
+  padding:.45rem 0;border-bottom:1px solid rgba(200,135,42,.06);
+  display:flex;align-items:center;gap:10px;
+}
+.tp-col-qairty .tp-list li{border-color:rgba(61,191,170,.06)}
+.tp-list li::before{
+  content:'';width:16px;height:1px;flex-shrink:0;
+}
+.tp-col-print .tp-list li::before{background:var(--amber);opacity:.4}
+.tp-col-qairty .tp-list li::before{background:var(--q-mint);opacity:.4}
+.tp-cta{
+  padding:12px 28px;font-size:11px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  border-radius:2px;cursor:pointer;text-decoration:none;
+  display:inline-block;transition:all .3s var(--ease);
+}
+.tp-col-print .tp-cta{
+  background:linear-gradient(135deg,var(--amber),var(--amber2));
+  color:var(--obsidian);box-shadow:0 4px 18px rgba(200,135,42,.22);
+}
+.tp-col-print .tp-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,135,42,.36)}
+.tp-col-qairty .tp-cta{
+  background:linear-gradient(135deg,var(--q-teal2),var(--q-teal3));
+  color:var(--cream);border:1px solid rgba(61,191,170,.2);
+  box-shadow:0 4px 18px rgba(13,46,42,.4);
+}
+.tp-col-qairty .tp-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(61,191,170,.25)}
+
+/* ══ BUNDLE ══ */
+.bundle-bar{
+  background:linear-gradient(90deg,rgba(200,135,42,.1),rgba(200,135,42,.06),rgba(200,135,42,.1));
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:2.5rem 3.5rem;position:relative;overflow:hidden;
+}
+.bundle-bar::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
+  background:linear-gradient(to bottom,var(--amber),var(--amber2));
+}
+.bundle-inner{
+  max-width:1220px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:2rem;
+  flex-wrap:wrap;
+}
+.bundle-left{display:flex;align-items:center;gap:2rem}
+.bundle-tag{
+  padding:5px 14px;
+  background:linear-gradient(135deg,var(--amber),var(--amber2));
+  color:var(--obsidian);font-size:9.5px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;border-radius:1px;
+  white-space:nowrap;
+}
+.bundle-text{}
+.bundle-title{
+  font-family:var(--serif);font-size:1.4rem;font-weight:400;
+  color:var(--cream);margin-bottom:.2rem;
+}
+.bundle-sub{font-size:13px;font-weight:300;color:rgba(248,243,235,.45)}
+.bundle-sub strong{color:var(--amber2);font-weight:400}
+.bundle-price-wrap{display:flex;align-items:baseline;gap:.8rem}
+.bundle-original{
+  font-family:var(--serif);font-size:1.5rem;font-weight:300;
+  color:rgba(248,243,235,.2);text-decoration:line-through;
+}
+.bundle-new{
+  font-family:var(--serif);font-size:2.2rem;font-weight:300;color:var(--amber2);
+}
+.bundle-save{
+  font-size:11px;font-weight:500;letter-spacing:.1em;
+  color:var(--cream);background:rgba(200,135,42,.2);
+  padding:3px 10px;border-radius:100px;
+  border:1px solid var(--border2);
+}
+.bundle-btn{
+  padding:14px 32px;
+  background:linear-gradient(135deg,var(--amber),var(--amber2));
+  color:var(--obsidian);font-size:11.5px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  border:none;border-radius:2px;cursor:pointer;
+  text-decoration:none;white-space:nowrap;
+  transition:all .35s var(--ease);
+  box-shadow:0 6px 24px rgba(200,135,42,.25);
+}
+.bundle-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(200,135,42,.38)}
+
+/* ══ WHY ══ */
+.why{
+  background:linear-gradient(180deg,var(--obsidian) 0%,var(--obsidian2) 100%);
+  position:relative;overflow:hidden;
+}
+.why::before{
+  content:'';position:absolute;right:-8%;top:5%;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(13,46,42,.2) 0%,transparent 70%);
+  pointer-events:none;
+}
+.why-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:7rem;align-items:center}
+.why-text p{
+  font-size:15px;font-weight:300;color:rgba(248,243,235,.5);
+  line-height:2;margin-bottom:1.2rem;
+}
+.why-text p strong{color:var(--amber2);font-weight:400}
+.why-figs{
+  display:grid;grid-template-columns:1fr 1fr;
+  border:1px solid var(--border);border-radius:4px;overflow:hidden;
+  background:var(--obsidian2);
+}
+.fig{
+  padding:2.2rem 1.6rem;text-align:center;
+  border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;transition:background .35s;
+}
+.fig:hover{background:rgba(200,135,42,.03)}
 .fig:nth-child(2n){border-right:none}
 .fig:nth-child(3),.fig:nth-child(4){border-bottom:none}
-.fig-number{font-family:var(--serif);font-size:2.8rem;font-weight:400;color:var(--gold);line-height:1;margin-bottom:.4rem}
-.fig-label{font-size:11px;font-weight:400;letter-spacing:.04em;color:var(--muted)}
+.fig-num{
+  font-family:var(--serif);font-size:2.8rem;font-weight:300;
+  color:var(--amber2);line-height:1;margin-bottom:.5rem;
+}
+.fig-lbl{font-size:11.5px;font-weight:300;color:rgba(248,243,235,.38);line-height:1.5}
+.fig-source{
+  font-size:9px;color:rgba(248,243,235,.18);letter-spacing:.08em;
+  text-transform:uppercase;margin-top:.4rem;display:block;
+}
 
-/* ═══ SERVICES ═══ */
-.services{background:var(--white)}
-.services-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden}
-.svc{background:var(--white);padding:2.8rem 2.2rem;transition:background .3s}
-.svc:hover{background:var(--cream)}
-.svc-num{font-family:var(--serif);font-size:1.6rem;font-weight:400;color:var(--border2);margin-bottom:1.2rem}
-.svc-title{font-family:var(--serif);font-size:1.1rem;font-weight:400;color:var(--ink);margin-bottom:.75rem}
-.svc-desc{font-size:13.5px;font-weight:300;color:var(--muted);line-height:1.8}
+/* ══ IMAGE SECTION ══ */
+.img-sec{
+  background:var(--obsidian2);padding:7rem 0;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+.img-grid{
+  display:grid;grid-template-columns:1.3fr 1fr 1fr;
+  gap:1.2rem;margin-top:4rem;
+}
+.img-card{
+  background:var(--obsidian3);border:1px solid var(--border);
+  border-radius:4px;overflow:hidden;position:relative;
+  display:flex;align-items:flex-end;cursor:pointer;
+  transition:border-color .3s,transform .4s var(--ease);
+}
+.img-card:hover{border-color:var(--border3);transform:translateY(-4px)}
+.img-card-tall{grid-row:span 2}
+/* Replace these with <img> tags */
+.img-placeholder{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.5rem;padding:1.5rem;
+}
+.img-placeholder-icon{
+  font-family:var(--serif);font-size:2rem;font-style:italic;
+  color:var(--amber);opacity:.2;
+}
+.img-placeholder-file{
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted2);font-weight:400;text-align:center;
+}
+.img-placeholder-desc{
+  font-size:11px;color:rgba(248,243,235,.2);text-align:center;line-height:1.5;font-weight:300;
+}
+.img-card-tall{min-height:480px}
+.img-card:not(.img-card-tall){min-height:220px}
+.img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(10,9,6,.75) 0%,rgba(10,9,6,.1) 50%,transparent 100%);
+  z-index:1;pointer-events:none;
+}
+.img-caption{
+  position:relative;z-index:2;padding:1.2rem 1.4rem;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(248,243,235,.4);font-weight:300;
+}
 
-/* ═══ PORTFOLIO ═══ */
-.portfolio-section{background:var(--cream);padding:7rem 0}
-.portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.pcard{border:1px solid var(--border);border-radius:4px;overflow:hidden;background:var(--white);transition:transform .4s var(--ease),border-color .3s,box-shadow .4s;cursor:pointer}
-.pcard:hover{transform:translateY(-10px);border-color:var(--border2);box-shadow:0 20px 60px rgba(26,24,20,.09)}
-.pcard-img{aspect-ratio:3/2;background:var(--cream2);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);overflow:hidden}
-/* IMAGE SLOTS — replace .menu-preview with:
-   <img src="menu-project-0X.jpg" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
-   Files: menu-project-01.jpg (book) 02 (flyer) 03 (wall) 04 (poster1) 05 (poster2) 06 (extra)
-   Spec: 900×600px min, 3:2, JPG 80% */
-.menu-preview{width:68%;max-width:170px;background:var(--white);border:1px solid var(--border);padding:1.6rem 1.1rem;text-align:center;box-shadow:0 10px 50px rgba(26,24,20,.1)}
-.mp-rule{width:28px;height:1px;background:var(--gold);opacity:.4;margin:9px auto}
-.mp-title{font-family:var(--serif);font-size:12px;font-weight:400;color:var(--ink);letter-spacing:.06em}
-.mp-sub{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);opacity:.55;font-weight:300}
-.mp-ar{font-family:var(--arabic);font-size:11px;color:var(--gold3);opacity:.7;margin-top:6px}
-.pcard-meta{padding:1.25rem 1.5rem}
-.pcard-region{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:4px;font-weight:400}
-.pcard-name{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--ink)}
-.pcard-type{font-size:12px;color:var(--muted);font-weight:300;margin-top:3px}
+/* ══ SERVICES ══ */
+.services{background:var(--obsidian);position:relative;overflow:hidden}
+.svc-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:6px;overflow:hidden;
+  margin-top:4.5rem;
+}
+.svc{
+  background:var(--obsidian);padding:3rem 2.5rem;
+  transition:background .4s;position:relative;overflow:hidden;
+}
+.svc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--amber),transparent);
+  transform:scaleX(0);transition:transform .6s var(--ease);
+}
+.svc:hover{background:rgba(200,135,42,.02)}
+.svc:hover::before{transform:scaleX(1)}
+.svc-num{
+  font-family:var(--serif);font-size:1.7rem;font-weight:300;
+  color:rgba(200,135,42,.18);margin-bottom:1.5rem;font-style:italic;
+}
+.svc-title{
+  font-family:var(--serif);font-size:1.15rem;font-weight:400;
+  color:var(--cream);margin-bottom:.7rem;
+}
+.svc-desc{font-size:13px;font-weight:300;color:rgba(248,243,235,.42);line-height:1.9}
 
-/* ═══ TESTIMONIALS ═══ */
-.testimonials{background:var(--ink);padding:7rem 0}
-.testimonials .section-h2{color:var(--cream)}
-.testimonials .section-label{color:var(--gold2)}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.05);border-radius:4px;overflow:hidden;margin-top:4rem}
-.tcard{background:var(--ink2);padding:2.5rem 2rem}
-.tcard-stars{color:var(--gold);letter-spacing:3px;font-size:11px;margin-bottom:1.2rem;opacity:.8}
-.tcard-quote{font-family:var(--serif);font-size:1.15rem;font-weight:400;font-style:italic;color:var(--cream);line-height:1.65;margin-bottom:1.5rem;opacity:.88}
-.tcard-author{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);opacity:.7}
+/* ══ PORTFOLIO ══ */
+.portfolio{background:var(--obsidian2);position:relative;overflow:hidden}
+.pf-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;margin-top:4.5rem;
+}
+.pcard{
+  border:1px solid var(--border);border-radius:4px;overflow:hidden;
+  background:var(--obsidian);
+  transition:transform .5s var(--ease),border-color .3s,box-shadow .5s;
+  cursor:pointer;
+}
+.pcard:hover{
+  transform:translateY(-10px);border-color:var(--border3);
+  box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 0 1px rgba(200,135,42,.12);
+}
+.pcard.qairty-card:hover{
+  border-color:rgba(61,191,170,.4);
+  box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 0 1px rgba(61,191,170,.1);
+}
+.pcard-img{
+  aspect-ratio:3/2;background:var(--obsidian2);
+  display:flex;align-items:center;justify-content:center;
+  border-bottom:1px solid var(--border);overflow:hidden;position:relative;
+}
+/* Replace inner content with <img src="..."> for real photos */
+.menu-preview{
+  width:52%;max-width:140px;
+  background:linear-gradient(160deg,var(--obsidian),var(--obsidian2));
+  border:1px solid var(--border2);padding:1.4rem 1rem;text-align:center;
+  box-shadow:0 16px 60px rgba(0,0,0,.5);
+}
+.menu-preview.qairty-prev{
+  border-color:rgba(61,191,170,.25);
+  background:linear-gradient(160deg,var(--q-teal),var(--obsidian2));
+}
+.mp-rule{width:22px;height:1px;background:var(--amber);opacity:.25;margin:7px auto}
+.menu-preview.qairty-prev .mp-rule{background:var(--q-mint)}
+.mp-title{font-family:var(--serif);font-size:11.5px;color:var(--cream);letter-spacing:.06em;font-style:italic}
+.mp-sub{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.mp-ar{font-family:var(--arabic);font-size:11px;color:var(--amber2);opacity:.7;margin-top:5px}
+.mp-q{font-size:11px;color:var(--q-mint);opacity:.8;margin-top:5px;letter-spacing:.08em}
+.pcard-meta{padding:1.4rem}
+.pcard-region{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);opacity:.6;margin-bottom:5px}
+.pcard.qairty-card .pcard-region{color:var(--q-mint)}
+.pcard-name{font-family:var(--serif);font-size:1.08rem;font-weight:400;color:var(--cream)}
+.pcard-type{font-size:11.5px;color:var(--muted);font-weight:300;margin-top:4px}
 
-/* ═══ PRICING ═══ */
-.pricing{background:var(--white)}
-.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:visible;margin-top:4rem;position:relative}
-.prc{background:var(--white);padding:2.5rem 1.75rem;display:flex;flex-direction:column;position:relative;transition:background .3s}
-.prc:hover{background:var(--cream)}
-.prc.featured{background:var(--ink);z-index:2;margin:-1px;border-radius:4px}
-.prc.featured:hover{background:var(--ink2)}
-.prc-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--white);font-size:9px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;padding:5px 14px;border-radius:100px;white-space:nowrap}
-.prc-tier{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;opacity:.7}
-.prc.featured .prc-tier{color:var(--gold2)}
-.prc-price{font-family:var(--serif);font-size:2.5rem;font-weight:400;color:var(--ink);line-height:1;margin-bottom:4px}
-.prc.featured .prc-price{color:var(--white)}
-.prc-from{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
-.prc.featured .prc-from{color:rgba(245,240,232,.4)}
-.prc-rule{width:24px;height:1px;background:var(--gold);opacity:.3;margin-bottom:1.5rem}
+/* ══ TESTIMONIALS ══ */
+.testi{
+  background:linear-gradient(160deg,var(--obsidian),var(--obsidian2));
+  border-top:1px solid var(--border);
+}
+.testi-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-top:4.5rem;
+}
+.tcard{
+  background:var(--obsidian2);padding:2.8rem 2.2rem;
+  position:relative;overflow:hidden;transition:background .3s;
+}
+.tcard:hover{background:rgba(200,135,42,.02)}
+.tcard::before{
+  content:'"';position:absolute;top:.5rem;right:1.2rem;
+  font-family:var(--serif);font-size:7rem;color:var(--amber);
+  opacity:.05;line-height:1;pointer-events:none;
+}
+.tcard-stars{color:var(--amber2);letter-spacing:4px;font-size:10px;margin-bottom:1.3rem}
+.tcard-quote{
+  font-family:var(--serif);font-size:1.1rem;font-weight:300;font-style:italic;
+  color:rgba(248,243,235,.72);line-height:1.75;margin-bottom:1.6rem;
+}
+.tcard-author{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);opacity:.55}
+.tcard-product{
+  display:inline-block;margin-top:.5rem;
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  padding:3px 9px;border-radius:100px;
+}
+.tcard-product.print{background:rgba(200,135,42,.08);color:var(--amber2);border:1px solid rgba(200,135,42,.15)}
+.tcard-product.qairty{background:rgba(61,191,170,.08);color:var(--q-mint2);border:1px solid rgba(61,191,170,.15)}
+
+/* ══ QAIRTY SECTION ══ */
+.qairty-section{
+  background:linear-gradient(160deg,var(--obsidian) 0%,var(--q-teal) 100%);
+  position:relative;overflow:hidden;
+  border-top:1px solid rgba(61,191,170,.1);
+}
+.qairty-section::before{
+  content:'';position:absolute;right:-5%;top:-10%;
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(61,191,170,.1) 0%,transparent 65%);
+  pointer-events:none;
+}
+.qairty-section::after{
+  content:'';position:absolute;left:-5%;bottom:-5%;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,135,42,.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.q-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:6rem;align-items:center;position:relative;z-index:1;
+}
+.q-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 16px;border:1px solid rgba(61,191,170,.3);
+  border-radius:100px;margin-bottom:2rem;
+  background:rgba(13,46,42,.4);
+}
+.q-badge-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--q-mint);
+  box-shadow:0 0 10px var(--q-mint);
+  animation:blink 2s ease-in-out infinite;
+}
+.q-badge-text{
+  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--q-mint);font-weight:400;
+}
+.q-h2{
+  font-family:var(--serif);
+  font-size:clamp(2.2rem,4vw,3.4rem);
+  font-weight:300;line-height:1.1;color:var(--cream);margin-bottom:1.6rem;
+}
+.q-h2 em{font-style:italic;color:var(--q-mint2)}
+.q-sub{
+  font-size:15.5px;font-weight:300;color:rgba(248,243,235,.5);
+  line-height:1.9;margin-bottom:2.5rem;
+}
+.q-features{list-style:none;margin-bottom:3rem}
+.q-features li{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:.65rem 0;border-bottom:1px solid rgba(61,191,170,.07);
+  font-size:13.5px;font-weight:300;color:rgba(248,243,235,.55);line-height:1.5;
+}
+.q-features li:last-child{border-bottom:none}
+.q-check{
+  width:19px;height:19px;border-radius:50%;
+  background:rgba(61,191,170,.12);border:1px solid rgba(61,191,170,.3);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;
+}
+.q-check::before{content:'✓';font-size:9px;color:var(--q-mint)}
+
+/* Qairty phone mockup — more refined */
+.phone-wrap{
+  display:flex;justify-content:center;align-items:center;position:relative;
+}
+.phone-glow{
+  position:absolute;width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(61,191,170,.18) 0%,transparent 70%);
+  animation:glowPulse 3s ease-in-out infinite;
+}
+@keyframes glowPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.1);opacity:1}}
+.phone{
+  width:255px;
+  background:var(--obsidian);
+  border:1.5px solid rgba(248,243,235,.12);
+  border-radius:38px;overflow:hidden;
+  box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04),inset 0 0 0 1px rgba(255,255,255,.02);
+  position:relative;z-index:1;
+}
+.phone-island{
+  width:90px;height:24px;
+  background:var(--obsidian);
+  border-radius:0 0 16px 16px;
+  margin:0 auto;position:relative;z-index:2;
+}
+.phone-screen{background:#FAFAF8;min-height:510px}
+.ph-header{
+  background:linear-gradient(160deg,#1A1612,#0D0B08);
+  padding:1.1rem 1rem .9rem;
+  border-bottom:1px solid rgba(200,135,42,.08);
+}
+.ph-logo{font-family:var(--arabic);font-size:14px;color:var(--amber2);text-align:center}
+.ph-name{font-size:8.5px;color:rgba(248,243,235,.35);text-align:center;letter-spacing:.15em;text-transform:uppercase;margin-top:2px}
+.ph-body{background:#FAFAF8;padding:.7rem}
+.ph-cats{display:flex;gap:.35rem;overflow-x:auto;padding-bottom:.4rem;margin-bottom:.6rem}
+.ph-cats::-webkit-scrollbar{display:none}
+.ph-cat-btn{
+  padding:4px 10px;border-radius:20px;
+  font-size:7.5px;font-weight:500;
+  white-space:nowrap;cursor:pointer;flex-shrink:0;
+  font-family:var(--sans);transition:all .2s;letter-spacing:.03em;
+}
+.ph-cat-btn.active{background:#1A1612;color:var(--amber2);border:1px solid #1A1612}
+.ph-cat-btn:not(.active){background:transparent;color:#888;border:1px solid rgba(0,0,0,.1)}
+.ph-item{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.45rem .35rem;border-bottom:1px solid rgba(0,0,0,.05);
+}
+.ph-img{
+  width:40px;height:40px;border-radius:7px;
+  background:linear-gradient(135deg,#F0E8DA,#DDD2BE);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;
+}
+.ph-info{flex:1}
+.ph-iname{font-size:8.5px;font-weight:500;color:#1A1612;margin-bottom:1px}
+.ph-idesc{font-size:7px;color:#999;line-height:1.3}
+.ph-price{font-family:var(--serif);font-size:10px;color:var(--amber);font-weight:500}
+.ph-wa{
+  margin:.6rem .6rem 0;padding:.55rem;border-radius:10px;
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  display:flex;align-items:center;justify-content:center;gap:.4rem;cursor:pointer;
+}
+.ph-wa-ico{font-size:12px}
+.ph-wa-txt{font-size:7.5px;font-weight:600;color:white;letter-spacing:.04em}
+
+/* ══ QAIRTY PRICING ══ */
+.q-pricing{
+  background:var(--obsidian2);
+  border-top:1px solid rgba(61,191,170,.08);
+}
+.q-price-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:rgba(61,191,170,.08);
+  border:1px solid rgba(61,191,170,.1);border-radius:6px;overflow:visible;
+  margin-top:4.5rem;position:relative;
+}
+.q-prc{
+  background:var(--obsidian2);padding:2.8rem 2rem;
+  display:flex;flex-direction:column;transition:background .3s;
+  position:relative;
+}
+.q-prc:hover{background:var(--obsidian3)}
+.q-prc.feat{
+  background:linear-gradient(160deg,var(--q-teal),rgba(13,46,42,.8));
+  z-index:2;margin:-1px;border-radius:6px;
+  border:1px solid rgba(61,191,170,.25);
+}
+.q-prc-badge{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(90deg,var(--q-teal3),var(--q-mint));
+  color:white;font-size:8.5px;font-weight:600;letter-spacing:.15em;
+  text-transform:uppercase;padding:5px 16px;border-radius:100px;white-space:nowrap;
+}
+.q-tier{
+  font-size:10px;font-weight:400;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--q-mint);margin-bottom:1rem;
+}
+.q-prc:not(.feat) .q-tier{color:var(--amber2);opacity:.7}
+.q-price{
+  font-family:var(--serif);font-size:3rem;font-weight:300;
+  color:var(--cream);line-height:1;margin-bottom:.3rem;
+}
+.q-once{
+  font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(248,243,235,.28);margin-bottom:1.4rem;
+}
+.q-rule{width:22px;height:1px;background:var(--q-mint);opacity:.2;margin-bottom:1.4rem}
+.q-prc.feat .q-rule{opacity:.4}
+.q-feats{list-style:none;flex:1}
+.q-feats li{
+  font-size:13px;font-weight:300;color:rgba(248,243,235,.45);
+  padding:.45rem 0;border-bottom:1px solid rgba(61,191,170,.06);
+  display:flex;align-items:flex-start;gap:8px;line-height:1.5;
+}
+.q-prc.feat .q-feats li{color:rgba(248,243,235,.7);border-color:rgba(61,191,170,.1)}
+.q-feats li::before{content:'·';color:var(--q-mint);opacity:.6;flex-shrink:0;font-size:18px;line-height:1;margin-top:-1px}
+.q-prc:not(.feat) .q-feats li::before{color:var(--amber2)}
+.q-btn{
+  display:block;width:100%;padding:13px;margin-top:2rem;
+  font-family:var(--sans);font-size:11px;font-weight:500;
+  letter-spacing:.11em;text-transform:uppercase;
+  border:1px solid rgba(61,191,170,.2);background:transparent;
+  color:rgba(248,243,235,.6);cursor:pointer;border-radius:2px;
+  transition:all .3s var(--ease);
+}
+.q-btn:hover{border-color:var(--q-mint);color:var(--q-mint)}
+.q-prc.feat .q-btn{
+  background:linear-gradient(135deg,var(--q-teal3),var(--q-mint));
+  border:none;color:white;box-shadow:0 4px 18px rgba(61,191,170,.2);
+}
+.q-prc.feat .q-btn:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(61,191,170,.35)}
+
+/* Qairty Pro tier */
+.q-prc-pro{
+  background:var(--obsidian2);padding:2.8rem 2rem;
+  display:flex;flex-direction:column;transition:background .3s;
+  position:relative;grid-column:span 3;
+  border-top:1px solid rgba(61,191,170,.08);
+  margin-top:1px;
+}
+.q-prc-pro::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(61,191,170,.3),transparent);
+}
+.q-pro-inner{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3rem;align-items:start}
+.q-pro-title{
+  font-family:var(--serif);font-size:1.6rem;font-weight:300;color:var(--cream);
+  margin-bottom:.5rem;
+}
+.q-pro-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--q-mint);background:rgba(61,191,170,.08);
+  border:1px solid rgba(61,191,170,.2);
+  padding:4px 12px;border-radius:100px;margin-bottom:1rem;
+}
+.q-pro-price{
+  font-family:var(--serif);font-size:2.5rem;font-weight:300;color:var(--cream);
+}
+.q-pro-note{
+  font-size:11px;font-weight:300;color:rgba(248,243,235,.3);
+  letter-spacing:.06em;margin-top:.3rem;
+}
+.q-pro-desc{
+  font-size:13.5px;font-weight:300;color:rgba(248,243,235,.45);line-height:1.85;
+}
+.q-pro-feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.3rem}
+.q-pro-feat{
+  font-size:12.5px;font-weight:300;color:rgba(248,243,235,.5);
+  padding:.3rem 0;display:flex;align-items:center;gap:7px;
+}
+.q-pro-feat::before{content:'✓';color:var(--q-mint);font-size:9px;opacity:.7}
+.q-pro-btn{
+  padding:14px 28px;
+  background:var(--obsidian3);
+  border:1px solid rgba(61,191,170,.3);
+  color:var(--q-mint);font-size:11px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  border-radius:2px;cursor:pointer;
+  transition:all .3s var(--ease);font-family:var(--sans);
+  display:inline-block;text-decoration:none;
+}
+.q-pro-btn:hover{background:rgba(61,191,170,.1);border-color:var(--q-mint);transform:translateY(-2px)}
+
+/* ══ PRINT PRICING ══ */
+.print-pricing{background:var(--obsidian)}
+.print-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:6px;overflow:visible;
+  margin-top:4.5rem;position:relative;
+}
+.prc{
+  background:var(--obsidian);padding:2.8rem 1.8rem;
+  display:flex;flex-direction:column;position:relative;transition:background .3s;
+}
+.prc:hover{background:rgba(200,135,42,.02)}
+.prc.feat-dark{
+  background:linear-gradient(160deg,rgba(200,135,42,.1),var(--obsidian2));
+  z-index:2;margin:-1px;border-radius:6px;border:1px solid var(--border3);
+}
+.prc-badge{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--amber),var(--amber2));
+  color:var(--obsidian);font-size:8.5px;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;
+  padding:5px 16px;border-radius:100px;white-space:nowrap;
+}
+.prc-tier{
+  font-size:9.5px;font-weight:400;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--amber2);margin-bottom:1rem;opacity:.65;
+}
+.prc.feat-dark .prc-tier{opacity:1}
+.prc-price{
+  font-family:var(--serif);font-size:2.8rem;font-weight:300;
+  color:var(--cream);line-height:1;margin-bottom:.3rem;
+}
+.prc-from{
+  font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(248,243,235,.22);margin-bottom:1.4rem;
+}
+.prc-rule{width:18px;height:1px;background:var(--amber);opacity:.22;margin-bottom:1.4rem}
 .prc-features{list-style:none;flex:1}
-.prc-features li{font-size:13px;font-weight:300;color:var(--muted);padding:.45rem 0;border-bottom:1px solid rgba(184,150,78,.07);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
-.prc.featured .prc-features li{color:rgba(245,240,232,.6);border-color:rgba(245,240,232,.07)}
-.prc-features li::before{content:'·';color:var(--gold);opacity:.6;flex-shrink:0;font-size:18px;line-height:1;margin-top:-1px}
-.prc.featured .prc-features li::before{color:var(--gold2)}
-.prc-btn{display:block;width:100%;padding:12px;margin-top:2rem;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--border2);background:transparent;color:var(--ink);cursor:pointer;border-radius:1px;transition:all .3s var(--ease)}
-.prc-btn:hover{border-color:var(--gold);color:var(--gold)}
-.prc.featured .prc-btn{background:var(--gold);border-color:var(--gold);color:var(--white)}
-.prc.featured .prc-btn:hover{background:var(--gold2)}
+.prc-features li{
+  font-size:12.5px;font-weight:300;color:rgba(248,243,235,.4);
+  padding:.45rem 0;border-bottom:1px solid rgba(200,135,42,.05);
+  display:flex;align-items:flex-start;gap:8px;line-height:1.5;
+}
+.prc.feat-dark .prc-features li{color:rgba(248,243,235,.62)}
+.prc-features li::before{content:'·';color:var(--amber);opacity:.45;flex-shrink:0;font-size:18px;line-height:1;margin-top:-1px}
+.prc-btn{
+  display:block;width:100%;padding:12px;margin-top:2rem;
+  font-family:var(--sans);font-size:10.5px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid rgba(200,135,42,.2);background:transparent;
+  color:rgba(248,243,235,.5);cursor:pointer;border-radius:2px;
+  transition:all .3s var(--ease);
+}
+.prc-btn:hover{border-color:var(--amber);color:var(--amber)}
+.prc.feat-dark .prc-btn{
+  background:linear-gradient(135deg,var(--amber),var(--amber2));
+  border-color:transparent;color:var(--obsidian);
+}
+.prc.feat-dark .prc-btn:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(200,135,42,.35)}
 
-/* ═══ PROCESS ═══ */
-.process{background:var(--cream)}
-.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:5rem}
-.pstep{text-align:center}
-.pstep-num{width:52px;height:52px;border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--gold)}
-.pstep-title{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--ink);margin-bottom:.6rem}
-.pstep-desc{font-size:13px;font-weight:300;color:var(--muted);line-height:1.8}
+/* ══ FAQ ══ */
+.faq{
+  background:var(--obsidian2);
+  border-top:1px solid var(--border);
+}
+.faq-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:6px;overflow:hidden;
+  margin-top:4.5rem;
+}
+.faq-item{
+  background:var(--obsidian2);padding:2rem 2.2rem;
+  cursor:pointer;transition:background .3s;position:relative;
+}
+.faq-item:hover{background:rgba(200,135,42,.02)}
+.faq-q{
+  font-family:var(--serif);font-size:1.05rem;font-weight:400;
+  color:var(--cream);margin-bottom:.8rem;
+  display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;
+}
+.faq-q .faq-icon{
+  color:var(--amber);opacity:.4;font-size:18px;flex-shrink:0;
+  transition:transform .3s,opacity .3s;line-height:1;margin-top:2px;
+}
+.faq-item.open .faq-icon{transform:rotate(45deg);opacity:.8}
+.faq-a{
+  font-size:13.5px;font-weight:300;color:rgba(248,243,235,.42);
+  line-height:1.85;display:none;
+}
+.faq-item.open .faq-a{display:block}
 
-/* ═══ URGENCY ═══ */
-.urgency{background:var(--gold);padding:1.3rem 3rem;text-align:center}
-.urgency p{font-size:13px;font-weight:400;letter-spacing:.04em;color:var(--white);opacity:.95}
-.urgency strong{font-weight:500;letter-spacing:.08em}
-.urgency a{color:var(--white);text-decoration:underline;text-underline-offset:3px}
+/* ══ PROCESS ══ */
+.process{
+  background:var(--obsidian);
+  border-top:1px solid var(--border);
+}
+.process-steps{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:2rem;margin-top:5rem;position:relative;
+}
+.process-steps::before{
+  content:'';position:absolute;top:26px;left:calc(12.5% + 27px);
+  right:calc(12.5% + 27px);height:1px;
+  background:linear-gradient(90deg,transparent,var(--amber),transparent);opacity:.12;
+}
+.pstep{text-align:center;position:relative}
+.pstep-num{
+  width:52px;height:52px;border:1px solid var(--border2);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.8rem;
+  font-family:var(--serif);font-size:1.3rem;font-weight:300;
+  color:var(--amber2);font-style:italic;background:var(--obsidian);
+  position:relative;z-index:1;transition:border-color .3s,box-shadow .3s;
+}
+.pstep:hover .pstep-num{border-color:var(--border3);box-shadow:0 0 20px rgba(200,135,42,.12)}
+.pstep-title{font-family:var(--serif);font-size:1.08rem;font-weight:400;color:var(--cream);margin-bottom:.7rem}
+.pstep-desc{font-size:12.5px;font-weight:300;color:rgba(248,243,235,.38);line-height:1.9}
 
-/* ═══ FORM ═══ */
-.form-section{background:var(--white);padding-bottom:8rem}
-.form-wrap{max-width:680px;margin:4rem auto 0;border:1px solid var(--border);border-radius:4px;background:var(--cream);padding:3rem}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
-.fg{display:flex;flex-direction:column;gap:7px;margin-bottom:1.25rem}
-.fg label{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.75}
-.fg input,.fg select,.fg textarea{padding:12px 15px;background:var(--white);border:1px solid var(--border2);border-radius:1px;font-family:var(--sans);font-size:14px;font-weight:300;color:var(--ink);outline:none;transition:border-color .25s;-webkit-appearance:none;appearance:none}
-.fg select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23B8964E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
-.fg input::placeholder,.fg textarea::placeholder{color:var(--muted);opacity:.4}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold)}
-.fg textarea{height:110px;resize:none;line-height:1.6}
-.pkg-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1.25rem}
+/* ══ URGENCY ══ */
+.urgency{
+  background:linear-gradient(90deg,rgba(200,135,42,.1),rgba(200,135,42,.07),rgba(200,135,42,.1));
+  padding:1.5rem 3.5rem;
+  border-top:1px solid rgba(200,135,42,.18);
+  border-bottom:1px solid rgba(200,135,42,.18);
+}
+.urgency-inner{
+  max-width:1220px;margin:0 auto;
+  display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;
+}
+.urgency-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--amber);animation:blink 2s ease-in-out infinite;flex-shrink:0;
+}
+.urgency p{font-size:12.5px;font-weight:300;color:rgba(248,243,235,.65);letter-spacing:.04em}
+.urgency strong{color:var(--amber2);font-weight:500}
+.urgency a{color:var(--amber2);text-decoration:none;border-bottom:1px solid rgba(200,135,42,.3);padding-bottom:1px;transition:border-color .2s}
+.urgency a:hover{border-color:var(--amber2)}
+
+/* ══ FORM ══ */
+.form-section{background:var(--obsidian);padding-bottom:8rem}
+.form-wrap{
+  max-width:720px;margin:4rem auto 0;
+  border:1px solid var(--border);border-radius:6px;
+  background:var(--obsidian2);padding:3.5rem;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem}
+.fg{display:flex;flex-direction:column;gap:7px;margin-bottom:1.2rem}
+.fg label{
+  font-size:9.5px;font-weight:400;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--amber2);opacity:.55;
+}
+.fg input,.fg select,.fg textarea{
+  padding:12px 14px;background:var(--obsidian3);
+  border:1px solid rgba(200,135,42,.15);border-radius:2px;
+  font-family:var(--sans);font-size:14px;font-weight:300;
+  color:var(--cream);outline:none;transition:border-color .25s;
+  -webkit-appearance:none;appearance:none;
+}
+.fg select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23C8872A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+  padding-right:38px;cursor:pointer;
+}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(248,243,235,.18)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--amber)}
+.fg textarea{height:105px;resize:none;line-height:1.7}
+.stabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.stab{
+  padding:8px 16px;border:1px solid rgba(200,135,42,.18);
+  border-radius:2px;font-size:10.5px;font-weight:400;
+  color:rgba(248,243,235,.38);cursor:pointer;transition:all .25s;
+  font-family:var(--sans);background:transparent;
+}
+.stab:hover{border-color:var(--amber-mid);color:rgba(248,243,235,.7)}
+.stab.active{border-color:var(--amber);color:var(--amber)}
+.stab.active.q-stab{border-color:var(--q-mint);color:var(--q-mint)}
+.pkg-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1.2rem}
 .pkg-radio{display:none}
-.pkg-radio+label{display:block;padding:11px 14px;border:1px solid var(--border2);border-radius:1px;font-size:12px;font-weight:400;color:var(--muted);cursor:pointer;text-align:center;transition:all .25s}
-.pkg-radio:checked+label{border-color:var(--gold);color:var(--gold3);background:rgba(184,150,78,.05)}
-.submit-btn{width:100%;padding:15px;background:var(--gold);color:var(--white);font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:1px;cursor:pointer;transition:all .3s var(--ease);margin-top:.5rem}
-.submit-btn:hover{background:var(--gold3);transform:translateY(-1px)}
-.form-note{text-align:center;font-size:11px;color:var(--muted);opacity:.5;margin-top:1.25rem;letter-spacing:.03em}
-.success-box{display:none;text-align:center;padding:3rem 2rem}
+.pkg-radio+label{
+  display:block;padding:11px 14px;border:1px solid rgba(200,135,42,.15);
+  border-radius:2px;font-size:11.5px;font-weight:300;
+  color:rgba(248,243,235,.38);cursor:pointer;text-align:center;transition:all .25s;
+}
+.pkg-radio:checked+label{border-color:var(--amber);color:var(--amber2);background:rgba(200,135,42,.05)}
+.submit-btn{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,var(--amber),var(--amber2));
+  color:var(--obsidian);font-family:var(--sans);
+  font-size:11.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  border:none;border-radius:2px;cursor:pointer;
+  transition:all .35s var(--ease);margin-top:.4rem;
+}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,135,42,.32)}
+.form-note{
+  text-align:center;font-size:10.5px;color:rgba(248,243,235,.2);
+  margin-top:1.2rem;letter-spacing:.04em;
+}
+.success-box{display:none;text-align:center;padding:3.5rem 2rem}
 .success-box.show{display:block}
-.success-box h3{font-family:var(--serif);font-size:2rem;font-weight:400;color:var(--ink);margin-bottom:.5rem}
-.success-box p{font-size:14px;color:var(--muted);font-weight:300;margin-top:.5rem}
-.success-icon{font-family:var(--serif);font-size:2.5rem;color:var(--gold);font-style:italic;margin-bottom:1rem;opacity:.7}
+.success-icon{font-family:var(--serif);font-size:2.8rem;color:var(--amber);font-style:italic;opacity:.5;margin-bottom:1.2rem}
+.success-box h3{font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--cream);margin-bottom:.5rem}
+.success-box p{font-size:13.5px;color:rgba(248,243,235,.4);font-weight:300;margin-top:.5rem;line-height:1.7}
 
-/* ═══ FOOTER ═══ */
-footer{background:var(--ink);padding:3rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.05)}
-.footer-logo{font-family:var(--serif);font-size:1.2rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,240,232,.5)}
-.footer-right{font-size:11px;color:rgba(245,240,232,.25);letter-spacing:.06em}
-.footer-langs{display:flex;gap:1.5rem;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.3)}
+/* ══ FOOTER ══ */
+footer{
+  background:var(--obsidian2);padding:3rem 3.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--border);
+}
+.footer-logo{
+  font-family:var(--serif);font-size:1.2rem;font-weight:400;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(248,243,235,.25);font-style:italic;
+}
+.footer-mid{
+  display:flex;gap:2rem;align-items:center;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(248,243,235,.18);
+}
+.footer-right{font-size:10.5px;color:rgba(248,243,235,.18);letter-spacing:.08em}
 
-/* ═══ STICKY ═══ */
-.sticky{position:fixed;bottom:2rem;right:2rem;z-index:90;opacity:0;transform:translateY(12px);pointer-events:none;transition:all .4s var(--ease)}
+/* ══ STICKY ══ */
+.sticky{
+  position:fixed;bottom:2rem;right:2rem;z-index:190;
+  opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:all .4s var(--ease);
+}
 .sticky.show{opacity:1;transform:translateY(0);pointer-events:all}
-.sticky a{display:flex;align-items:center;gap:8px;padding:13px 22px;background:var(--ink);color:var(--cream);font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:100px;border:1px solid rgba(255,255,255,.12);transition:all .3s;box-shadow:0 4px 28px rgba(26,24,20,.22)}
-.sticky a:hover{background:var(--ink2)}
-.sticky-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.sticky a{
+  display:flex;align-items:center;gap:9px;
+  padding:13px 22px;
+  background:linear-gradient(135deg,var(--amber),var(--amber2));
+  color:var(--obsidian);font-size:11px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
+  border-radius:100px;
+  box-shadow:0 6px 30px rgba(200,135,42,.38);
+  transition:all .3s;
+}
+.sticky a:hover{transform:translateY(-2px);box-shadow:0 10px 38px rgba(200,135,42,.52)}
+.sticky-dot{width:6px;height:6px;border-radius:50%;background:var(--obsidian);flex-shrink:0}
 
-/* ═══ ANIMATIONS ═══ */
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
+/* ══ DIVIDERS ══ */
+.sec-div{
+  width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--amber),transparent);opacity:.1;
+}
+
+/* ══ REVEAL ══ */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
 .reveal.in{opacity:1;transform:none}
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
 
-/* ═══ RESPONSIVE ═══ */
-@media(max-width:1024px){
-  .pricing-grid{grid-template-columns:1fr 1fr}
-  .story-grid{grid-template-columns:1fr;gap:3rem}
-  .services-row{grid-template-columns:1fr 1fr}
-  .portfolio-grid{grid-template-columns:1fr 1fr}
+/* ══ ANIMATIONS ══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1100px){
+  .print-grid{grid-template-columns:1fr 1fr}
+  .why-grid,.q-inner{grid-template-columns:1fr;gap:4rem}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .pf-grid{grid-template-columns:1fr 1fr}
   .process-steps{grid-template-columns:1fr 1fr;gap:3rem}
   .testi-grid{grid-template-columns:1fr}
+  .img-grid{grid-template-columns:1fr 1fr}
+  .img-card-tall{grid-row:span 1;min-height:260px}
+  .q-price-grid{grid-template-columns:1fr}
+  .q-prc-pro{grid-column:span 1}
+  .q-pro-inner{grid-template-columns:1fr;gap:1.5rem}
+  .tp-grid{grid-template-columns:1fr}
+  .hero-product-cards{flex-direction:column}
+  .proof-inner{grid-template-columns:repeat(3,1fr)}
+  .faq-grid{grid-template-columns:1fr}
 }
 @media(max-width:768px){
-  nav{padding:1.2rem 1.5rem}
-  nav.scrolled{padding:.9rem 1.5rem}
+  nav{padding:1rem 1.5rem}
+  nav.scrolled{padding:.8rem 1.5rem}
   .nav-links{display:none}
+  .ann-bar{padding:.5rem 3rem .5rem 1.2rem}
+  .ann-bar-text{font-size:10.5px}
   .container,.container-sm{padding:0 1.5rem}
   section{padding:5rem 0}
-  .services-row,.portfolio-grid,.pricing-grid,.process-steps,.testi-grid{grid-template-columns:1fr}
+  .svc-grid,.pf-grid,.print-grid,.process-steps,.testi-grid,.img-grid,.q-price-grid,.tp-grid{grid-template-columns:1fr}
   .form-row,.pkg-grid{grid-template-columns:1fr}
-  .form-wrap{padding:2rem 1.5rem}
+  .form-wrap{padding:2rem 1.4rem}
   footer{flex-direction:column;gap:1rem;text-align:center}
-  .trust-inner{flex-direction:column;gap:1rem}
-  .trust-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.06);padding:.8rem}
+  .proof-inner{grid-template-columns:1fr 1fr;gap:0}
+  .urgency{padding:1.2rem 1.5rem}
+  .bundle-inner{justify-content:center}
+  .bundle-left{flex-direction:column;align-items:flex-start}
+  .faq-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
-
 <body data-lang="en">
 
-<!-- ══════════════════ NAV ══════════════════ -->
+<!-- ══ ANNOUNCEMENT BAR ══ -->
+<div class="ann-bar" id="annBar">
+  <div class="ann-bar-text">
+    <span class="ann-bar-dot"></span>
+    <span data-t="en">Qairty Digital Menu — Live in 3 days · No monthly fees</span>
+    <span data-t="ar">Qairty منيو رقمي — جاهز خلال 3 أيام · بدون رسوم شهرية</span>
+    <span data-t="de">Qairty Digitalmenü — In 3 Tagen live · Keine monatlichen Gebühren</span>
+    <span class="ann-bar-dot"></span>
+  </div>
+  <a href="#qairty">
+    <span data-t="en">Discover →</span>
+    <span data-t="ar">اكتشف →</span>
+    <span data-t="de">Entdecken →</span>
+  </a>
+  <button class="ann-bar-close" onclick="closeAnn()">×</button>
+</div>
+
+<!-- ══ NAV ══ -->
 <nav id="mainNav">
   <a href="#top" class="nav-logo">
-    <div class="logo-mark"></div>
-    <div class="logo-text-block">
+    <div class="logo-mark"><span class="logo-mark-inner">D</span></div>
+    <div class="logo-text">
       <span class="logo-name">Devency</span>
-      <span class="logo-tagline">
-        <span data-t="en">Growth Agency</span><span data-t="ar">وكالة النمو</span><span data-t="de">Wachstumsagentur</span>
+      <span class="logo-tag">
+        <span data-t="en">Growth Agency</span>
+        <span data-t="ar">وكالة النمو</span>
+        <span data-t="de">Wachstumsagentur</span>
       </span>
     </div>
   </a>
@@ -285,7 +1314,9 @@ footer{background:var(--ink);padding:3rem;display:flex;align-items:center;justif
   <div class="nav-links">
     <a href="#services"><span data-t="en">Services</span><span data-t="ar">الخدمات</span><span data-t="de">Leistungen</span></a>
     <a href="#portfolio"><span data-t="en">Work</span><span data-t="ar">أعمالنا</span><span data-t="de">Arbeiten</span></a>
-    <a href="#pricing"><span data-t="en">Pricing</span><span data-t="ar">الأسعار</span><span data-t="de">Preise</span></a>
+    <a href="#qairty" class="qairty-link">Qairty</a>
+    <a href="#print-pricing"><span data-t="en">Pricing</span><span data-t="ar">الأسعار</span><span data-t="de">Preise</span></a>
+    <a href="#faq">FAQ</a>
     <a href="#contact"><span data-t="en">Contact</span><span data-t="ar">تواصل</span><span data-t="de">Kontakt</span></a>
   </div>
 
@@ -296,273 +1327,762 @@ footer{background:var(--ink);padding:3rem;display:flex;align-items:center;justif
       <button class="lang-btn" onclick="setLang('de')">DE</button>
     </div>
     <a href="#contact" class="nav-cta">
-      <span data-t="en">Get a Quote</span><span data-t="ar">احصل على عرض</span><span data-t="de">Angebot</span>
+      <span data-t="en">Get a Quote</span>
+      <span data-t="ar">احصل على عرض</span>
+      <span data-t="de">Angebot</span>
     </a>
   </div>
 </nav>
 
-<!-- ══════════════════ HERO ══════════════════ -->
+<!-- ══ HERO ══ -->
 <section class="hero" id="top">
-  <div class="hero-bg" aria-hidden="true">Menu</div>
+  <div class="hero-bg"></div>
+  <div class="hero-line-v"></div>
+  <div class="hero-line-v"></div>
+  <div class="hero-line-h"></div>
+  <div class="hero-line-h"></div>
+  <div class="hero-corner tl"></div>
+  <div class="hero-corner tr"></div>
+  <div class="hero-corner bl"></div>
+  <div class="hero-corner br"></div>
 
-  <div class="hero-eyebrow reveal">
-    <span class="eyebrow-line"></span>
-    <span class="eyebrow-text">
-      <span data-t="en">Premium Restaurant Menu Design</span>
-      <span data-t="ar">تصميم قوائم الطعام الفاخرة</span>
-      <span data-t="de">Premium Speisekarten Design</span>
+  <div class="hero-eyebrow">
+    <span class="ey-line"></span>
+    <span class="ey-text">
+      <span data-t="en">Restaurant Menu Design — Print & Digital</span>
+      <span data-t="ar">تصميم قوائم المطاعم — مطبوع ورقمي</span>
+      <span data-t="de">Speisekarten-Design — Print & Digital</span>
     </span>
-    <span class="eyebrow-line"></span>
+    <span class="ey-line r"></span>
   </div>
 
-  <h1 class="hero-h1 reveal d2">
-    <span data-t="en">Your menu is your<br><em>finest ambassador</em></span>
-    <span data-t="ar">قائمتك هي<br><em>سفيرك الأول</em></span>
-    <span data-t="de">Ihre Speisekarte ist Ihr<br><em>bester Botschafter</em></span>
+  <h1 class="hero-h1">
+    <span data-t="en">More orders.<br>Better guests.<br><em>Higher checks.</em></span>
+    <span data-t="ar">طلبات أكثر.<br>ضيوف أفضل.<br><em>فاتورة أعلى.</em></span>
+    <span data-t="de">Mehr Bestellungen.<br>Bessere Gäste.<br><em>Höhere Umsätze.</em></span>
   </h1>
 
-  <p class="hero-sub reveal d3 bt">
-    <span data-t="en">Strategic menu design for restaurants, boutique venues, and hospitality brands across Europe, the GCC, and the Arab world.</span>
-    <span data-t="ar">تصميم استراتيجي لقوائم الطعام للمطاعم وعلامات الضيافة في أوروبا ودول الخليج والعالم العربي.</span>
-    <span data-t="de">Strategisches Speisekarten-Design für Restaurants und Hospitality-Marken in Europa, der GCC-Region und der arabischen Welt.</span>
+  <p class="hero-sub bt">
+    <span data-t="en">Strategic menu design — print & digital — for restaurants across Europe, the GCC, and the Arab world. Two products, one agency, zero compromises.</span>
+    <span data-t="ar">تصميم استراتيجي للقوائم — مطبوع ورقمي — للمطاعم في أوروبا والخليج والعالم العربي. منتجان، وكالة واحدة، بلا تنازلات.</span>
+    <span data-t="de">Strategisches Speisekarten-Design — für Restaurants in Europa, der GCC und der arabischen Welt. Zwei Produkte, eine Agentur.</span>
   </p>
 
-  <div class="hero-actions reveal d4">
-    <a href="#contact" class="btn-gold">
-      <span data-t="en">Start Your Project</span><span data-t="ar">ابدأ مشروعك</span><span data-t="de">Projekt starten</span>
+  <div class="hero-product-cards">
+    <a href="#print-pricing" class="hpc hpc-print">
+      <div class="hpc-label">
+        <span class="hpc-dot"></span>
+        <span data-t="en">Print Menu Design</span>
+        <span data-t="ar">تصميم المنيو المطبوع</span>
+        <span data-t="de">Druckmenü-Design</span>
+      </div>
+      <div class="hpc-title">
+        <span data-t="en">Signature Book Menus</span>
+        <span data-t="ar">قوائم دفتر التوقيع</span>
+        <span data-t="de">Signatur-Buchmenüs</span>
+      </div>
+      <div class="hpc-desc bt">
+        <span data-t="en">Multilingual · EU Allergen Compliant · Print-ready files</span>
+        <span data-t="ar">متعدد اللغات · متوافق مع لوائح الحساسية · ملفات طباعة</span>
+        <span data-t="de">Mehrsprachig · EU-konform · Druckfertig</span>
+      </div>
+      <div class="hpc-price">
+        <span data-t="en">From $390</span>
+        <span data-t="ar">يبدأ من $390</span>
+        <span data-t="de">Ab $390</span>
+      </div>
+      <span class="hpc-arrow">→</span>
     </a>
-    <a href="#portfolio" class="btn-ghost">
-      <span data-t="en">View Our Work</span><span data-t="ar">شاهد أعمالنا</span><span data-t="de">Unsere Arbeiten</span>
+    <a href="#qairty" class="hpc hpc-qairty">
+      <div class="hpc-label">
+        <span class="hpc-dot"></span>
+        Qairty
+        <span style="font-size:8.5px;opacity:.6;letter-spacing:.15em">
+          <span data-t="en">Digital Menu</span>
+          <span data-t="ar">منيو رقمي</span>
+          <span data-t="de">Digitalmenü</span>
+        </span>
+      </div>
+      <div class="hpc-title">
+        <span data-t="en">QR · WhatsApp · No App</span>
+        <span data-t="ar">QR · واتساب · بدون تطبيق</span>
+        <span data-t="de">QR · WhatsApp · Keine App</span>
+      </div>
+      <div class="hpc-desc bt">
+        <span data-t="en">Live in 3 days · One-time fee · No subscriptions ever</span>
+        <span data-t="ar">جاهز في 3 أيام · دفعة وحدة · بدون اشتراكات</span>
+        <span data-t="de">In 3 Tagen live · Einmalig · Kein Abo</span>
+      </div>
+      <div class="hpc-price">
+        <span data-t="en">From $149</span>
+        <span data-t="ar">يبدأ من $149</span>
+        <span data-t="de">Ab $149</span>
+      </div>
+      <span class="hpc-arrow">→</span>
     </a>
   </div>
 
-  <div class="hero-scroll reveal">
+  <div class="hero-scroll">
     <div class="scroll-line"></div>
     <span class="scroll-label">
-      <span data-t="en">Scroll</span><span data-t="ar">تمرير</span><span data-t="de">Scrollen</span>
+      <span data-t="en">Scroll</span>
+      <span data-t="ar">تمرير</span>
+      <span data-t="de">Scrollen</span>
     </span>
   </div>
 </section>
 
-<!-- ══════════════════ TRUST STRIP ══════════════════ -->
-<div class="trust">
-  <div class="trust-inner">
-    <div class="trust-item"><span class="label">DE / EU</span><span data-t="en">Allergen Compliant</span><span data-t="ar">متوافق مع اللوائح</span><span data-t="de">Allergenkonform</span></div>
-    <div class="trust-item"><span class="label">GCC / MENA</span><span data-t="en">Arabic Expertise</span><span data-t="ar">خبرة عربية</span><span data-t="de">Arabische Expertise</span></div>
-    <div class="trust-item"><span class="label">3 Languages</span><span data-t="en">EN · AR · DE</span><span data-t="ar">عربي · إنجليزي · ألماني</span><span data-t="de">EN · AR · DE</span></div>
-    <div class="trust-item"><span class="label">Print</span><span data-t="en">Production Ready</span><span data-t="ar">جاهز للطباعة</span><span data-t="de">Druckfertig</span></div>
-    <div class="trust-item"><span class="label">QR</span><span data-t="en">Digital Ecosystem</span><span data-t="ar">نظام رقمي متكامل</span><span data-t="de">Digitales Ökosystem</span></div>
+<!-- ══ SOCIAL PROOF ══ -->
+<div class="proof-strip">
+  <div class="proof-inner">
+    <div class="proof-item reveal">
+      <div class="proof-num">68%</div>
+      <div class="proof-label"><span data-t="en">Judge quality from menu</span><span data-t="ar">يحكمون من القائمة</span><span data-t="de">Beurteilen anhand der Karte</span></div>
+    </div>
+    <div class="proof-item reveal d1">
+      <div class="proof-num">+23%</div>
+      <div class="proof-label"><span data-t="en">Avg order value uplift</span><span data-t="ar">زيادة متوسط الطلب</span><span data-t="de">Höherer Bestellwert</span></div>
+    </div>
+    <div class="proof-item reveal d2">
+      <div class="proof-num">EN·AR·DE</div>
+      <div class="proof-label"><span data-t="en">3 languages supported</span><span data-t="ar">3 لغات مدعومة</span><span data-t="de">3 Sprachen unterstützt</span></div>
+    </div>
+    <div class="proof-item reveal d3">
+      <div class="proof-num">3 days</div>
+      <div class="proof-label"><span data-t="en">Qairty delivery time</span><span data-t="ar">وقت تسليم Qairty</span><span data-t="de">Qairty-Lieferzeit</span></div>
+    </div>
+    <div class="proof-item reveal d4">
+      <div class="proof-num">100%</div>
+      <div class="proof-label"><span data-t="en">EU allergen compliant</span><span data-t="ar">متوافق مع لوائح الحساسية</span><span data-t="de">EU-Allergenkonform</span></div>
+    </div>
   </div>
 </div>
 
-<!-- ══════════════════ STORY ══════════════════ -->
-<section class="story" id="about">
-  <div class="container">
-    <div class="story-grid">
-      <div class="reveal">
-        <p class="story-label"><span data-t="en">Why it matters</span><span data-t="ar">لماذا يهم</span><span data-t="de">Warum es wichtig ist</span></p>
-        <h2 class="story-h2">
-          <span data-t="en">Guests decide in <em>seconds</em></span>
-          <span data-t="ar">الضيوف يقررون في <em>ثوانٍ</em></span>
-          <span data-t="de">Gäste entscheiden in <em>Sekunden</em></span>
-        </h2>
-        <p class="story-p bt">
-          <span data-t="en">The menu reaches every table before your food does. A poorly designed one signals that the experience to follow may disappoint. A premium one — multilingual, precise, beautifully executed — builds trust before a single word is spoken.</span>
-          <span data-t="ar">قائمة الطعام تصل إلى كل طاولة قبل طعامك. قائمة رديئة التصميم تُخبر ضيوفك أن التجربة قد تخذلهم. أما قائمة راقية ومتعددة اللغات ومنفذة باحترافية — فتبني الثقة قبل أن ينطق أحد بكلمة.</span>
-          <span data-t="de">Die Speisekarte erreicht jeden Tisch, bevor Ihr Essen es tut. Eine schlecht gestaltete signalisiert Enttäuschung. Eine Premium-Speisekarte — mehrsprachig, präzise, wunderschön gestaltet — schafft Vertrauen, bevor ein Wort gesprochen wird.</span>
+<!-- ══ TWO PRODUCTS ══ -->
+<section class="two-products" id="products">
+  <div style="max-width:1220px;margin:0 auto;padding:0 3.5rem;text-align:center;margin-bottom:3.5rem">
+    <span class="sec-label reveal"><span data-t="en">Two solutions, one agency</span><span data-t="ar">حلّان، وكالة واحدة</span><span data-t="de">Zwei Lösungen, eine Agentur</span></span>
+    <h2 class="sec-h2 reveal d1"><span data-t="en">Choose your path — or <em>take both</em></span><span data-t="ar">اختر مسارك — أو <em>خذهما معاً</em></span><span data-t="de">Wählen Sie Ihren Weg — oder <em>nehmen Sie beide</em></span></h2>
+  </div>
+  <div style="max-width:1220px;margin:0 auto;padding:0 3.5rem">
+    <div class="tp-grid reveal d1">
+      <div class="tp-col tp-col-print">
+        <div class="tp-badge">
+          <span style="width:5px;height:5px;border-radius:50%;background:var(--amber2);display:inline-block"></span>
+          <span data-t="en">Print Menu Design</span>
+          <span data-t="ar">التصميم المطبوع</span>
+          <span data-t="de">Druckmenü-Design</span>
+        </div>
+        <div class="tp-num">01</div>
+        <h3 class="tp-title">
+          <span data-t="en">Signature Printed Menus</span>
+          <span data-t="ar">قوائم مطبوعة فاخرة</span>
+          <span data-t="de">Gedruckte Signatur-Menüs</span>
+        </h3>
+        <p class="tp-desc bt">
+          <span data-t="en">A premium printed menu is the first thing your guest touches. It sets the tone, builds trust, and guides every order. We design book menus, flyers, wall menus, and poster campaigns — multilingual, EU allergen-compliant, and ready for any print vendor in Europe or the GCC.</span>
+          <span data-t="ar">المنيو المطبوع الفاخر هو أول شيء يلمسه ضيفك. يحدد النبرة ويبني الثقة ويوجّه كل طلب. نصمم منيوهات دفتر وفلايرات ومنيوهات جدارية وحملات بوستر — متعددة اللغات، متوافقة مع لوائح الحساسية الأوروبية، وجاهزة لأي مطبعة في أوروبا أو الخليج.</span>
+          <span data-t="de">Ein Premium-Druckmenü ist das Erste, was Ihr Gast berührt. Wir gestalten Buchmenüs, Flyer, Wandmenüs und Poster-Kampagnen — mehrsprachig, EU-konform und druckfertig.</span>
         </p>
+        <div class="tp-from">
+          <span data-t="en">From $390</span>
+          <span data-t="ar">يبدأ من $390</span>
+          <span data-t="de">Ab $390</span>
+        </div>
+        <ul class="tp-list">
+          <li><span data-t="en">Book menus, flyers, posters, wall menus</span><span data-t="ar">منيوهات دفتر، فلايرات، بوسترات، جدارية</span><span data-t="de">Buchmenüs, Flyer, Poster, Wandmenüs</span></li>
+          <li><span data-t="en">English · Arabic · German</span><span data-t="ar">إنجليزي · عربي · ألماني</span><span data-t="de">Englisch · Arabisch · Deutsch</span></li>
+          <li><span data-t="en">EU Allergen compliance (Reg. 1169/2011)</span><span data-t="ar">امتثال أوروبي كامل لقواعد الحساسية</span><span data-t="de">EU-Allergenkonformität (Reg. 1169/2011)</span></li>
+          <li><span data-t="en">Menu psychology — higher margin items first</span><span data-t="ar">علم نفس القائمة — الأصناف ذات الهامش الأعلى أولاً</span><span data-t="de">Menüpsychologie — margenstarke Gerichte priorisiert</span></li>
+          <li><span data-t="en">CMYK print-ready files with bleed & crop marks</span><span data-t="ar">ملفات CMYK احترافية مع هوامش ووسوم القص</span><span data-t="de">CMYK-druckfertig mit Beschnittzugabe und Schnittmarken</span></li>
+        </ul>
+        <a href="#print-pricing" class="tp-cta">
+          <span data-t="en">See Print Packages →</span>
+          <span data-t="ar">شاهد باقات الطباعة →</span>
+          <span data-t="de">Druckpakete ansehen →</span>
+        </a>
       </div>
-      <div class="story-figures reveal d2">
+
+      <div class="tp-col tp-col-qairty">
+        <div class="tp-badge">
+          <span style="width:5px;height:5px;border-radius:50%;background:var(--q-mint);box-shadow:0 0 8px var(--q-mint);display:inline-block;animation:blink 2s ease-in-out infinite"></span>
+          Qairty
+        </div>
+        <div class="tp-num">02</div>
+        <h3 class="tp-title">
+          <span data-t="en">Digital Menu — QR & WhatsApp</span>
+          <span data-t="ar">منيو رقمي — QR وواتساب</span>
+          <span data-t="de">Digitalmenü — QR & WhatsApp</span>
+        </h3>
+        <p class="tp-desc bt">
+          <span data-t="en">No menu at all? That's costing you guests every single day. Qairty is a beautiful digital menu your guests scan and browse on their phones — then order directly on WhatsApp. One payment, yours forever. No app, no subscription, no developer needed.</span>
+          <span data-t="ar">مافيك منيو أصلاً؟ هاد يكلفك زبائن كل يوم. Qairty منيو رقمي جميل يمسحه ضيوفك ويتصفحونه على تلفوناتهم — ثم يطلبون مباشرة على واتساب. دفعة وحدة، ملكك للأبد. بلا تطبيق، بلا اشتراك، بلا مطور.</span>
+          <span data-t="de">Keine Speisekarte? Das kostet Sie täglich Gäste. Qairty ist ein digitales Menü, das Ihre Gäste scannen und auf dem Smartphone durchsuchen — und dann direkt per WhatsApp bestellen. Einmalige Zahlung, für immer. Keine App, kein Abo.</span>
+        </p>
+        <div class="tp-from" style="color:var(--q-mint)">
+          <span data-t="en">From $149</span>
+          <span data-t="ar">يبدأ من $149</span>
+          <span data-t="de">Ab $149</span>
+        </div>
+        <ul class="tp-list">
+          <li><span data-t="en">Beautiful mobile menu, instantly scannable via QR</span><span data-t="ar">منيو موبايل جميل قابل للمسح فوراً</span><span data-t="de">Schönes mobiles Menü, sofort per QR scannbar</span></li>
+          <li><span data-t="en">One-tap WhatsApp order button</span><span data-t="ar">زر واتساب للطلب بضغطة</span><span data-t="de">WhatsApp-Bestellbutton mit einem Tippen</span></li>
+          <li><span data-t="en">No monthly fees — ever</span><span data-t="ar">بدون رسوم شهرية — أبداً</span><span data-t="de">Keine monatlichen Gebühren — niemals</span></li>
+          <li><span data-t="en">Live in 3–5 business days</span><span data-t="ar">جاهز في 3–5 أيام عمل</span><span data-t="de">In 3–5 Werktagen live</span></li>
+          <li><span data-t="en">Arabic · English · German</span><span data-t="ar">عربي · إنجليزي · ألماني</span><span data-t="de">Arabisch · Englisch · Deutsch</span></li>
+        </ul>
+        <a href="#qairty" class="tp-cta">
+          <span data-t="en">Discover Qairty →</span>
+          <span data-t="ar">اكتشف Qairty →</span>
+          <span data-t="de">Qairty entdecken →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BUNDLE BAR ══ -->
+<div class="bundle-bar">
+  <div class="bundle-inner">
+    <div class="bundle-left">
+      <div class="bundle-tag">
+        <span data-t="en">Best Value</span>
+        <span data-t="ar">أفضل قيمة</span>
+        <span data-t="de">Bestes Angebot</span>
+      </div>
+      <div class="bundle-text">
+        <div class="bundle-title">
+          <span data-t="en">The Complete Restaurant Package</span>
+          <span data-t="ar">الباقة الكاملة للمطعم</span>
+          <span data-t="de">Das vollständige Restaurant-Paket</span>
+        </div>
+        <div class="bundle-sub bt">
+          <span data-t="en">Signature Print Menu <strong>+</strong> Qairty Plus Digital — same brand, print & digital</span>
+          <span data-t="ar">منيو Signature المطبوع <strong>+</strong> Qairty Plus الرقمي — هوية واحدة، مطبوع ورقمي</span>
+          <span data-t="de">Signature Druckmenü <strong>+</strong> Qairty Plus Digital — selbe Marke, Print & Digital</span>
+        </div>
+      </div>
+    </div>
+    <div class="bundle-price-wrap">
+      <div class="bundle-original">$1,239</div>
+      <div class="bundle-new">$890</div>
+      <div class="bundle-save">
+        <span data-t="en">Save $349</span>
+        <span data-t="ar">وفّر $349</span>
+        <span data-t="de">$349 sparen</span>
+      </div>
+    </div>
+    <a href="#contact" class="bundle-btn" onclick="selectBundle()">
+      <span data-t="en">Get This Bundle →</span>
+      <span data-t="ar">احصل على الباقة →</span>
+      <span data-t="de">Paket anfragen →</span>
+    </a>
+  </div>
+</div>
+
+<!-- ══ WHY ══ -->
+<section class="why" id="about">
+  <div class="container">
+    <div class="why-grid">
+      <div class="reveal">
+        <span class="sec-label"><span data-t="en">Why it matters</span><span data-t="ar">لماذا يهم</span><span data-t="de">Warum es wichtig ist</span></span>
+        <h2 class="sec-h2" style="margin-bottom:1.8rem">
+          <span data-t="en">Guests decide in <em>seconds.</em><br>Your menu decides for you.</span>
+          <span data-t="ar">الضيوف يقررون في <em>ثوانٍ.</em><br>قائمتك تقرر عنك.</span>
+          <span data-t="de">Gäste entscheiden in <em>Sekunden.</em><br>Ihre Karte entscheidet für Sie.</span>
+        </h2>
+        <div class="why-text">
+          <p class="bt">
+            <span data-t="en">The menu reaches every table before your food does. A poorly designed one signals that the experience to follow may disappoint. A <strong>premium menu</strong> — multilingual, precise, beautifully executed — builds trust before a single word is spoken.</span>
+            <span data-t="ar">القائمة تصل إلى كل طاولة قبل طعامك. قائمة رديئة تُخبر ضيوفك أن التجربة قد تخذلهم. أما <strong>قائمة راقية</strong> متعددة اللغات ومنفذة باحترافية — فتبني الثقة قبل أن ينطق أحد.</span>
+            <span data-t="de">Die Speisekarte erreicht jeden Tisch, bevor Ihr Essen es tut. Eine <strong>Premium-Speisekarte</strong> — mehrsprachig, präzise, wunderschön gestaltet — schafft Vertrauen, bevor ein Wort gesprochen wird.</span>
+          </p>
+          <p class="bt" style="margin-top:1rem">
+            <span data-t="en">And if you don't have a menu at all? That's costing you real guests every single day. <strong>Qairty</strong> solves this in 3 days — no subscriptions, no agency retainers.</span>
+            <span data-t="ar">وإن لم يكن لديك قائمة أصلاً؟ هاد يكلفك زبائن حقيقيين كل يوم. <strong>Qairty</strong> يحل هاد في 3 أيام — بدون اشتراكات.</span>
+            <span data-t="de">Und wenn Sie gar keine Speisekarte haben? Das kostet Sie täglich echte Gäste. <strong>Qairty</strong> löst das in 3 Tagen — kein Abo.</span>
+          </p>
+        </div>
+      </div>
+      <div class="why-figs reveal d2">
         <div class="fig">
-          <div class="fig-number">68%</div>
-          <div class="fig-label"><span data-t="en">of guests judge quality from the menu</span><span data-t="ar">من الضيوف يحكمون على الجودة من القائمة</span><span data-t="de">der Gäste beurteilen die Qualität anhand der Karte</span></div>
+          <div class="fig-num">68%</div>
+          <div class="fig-lbl"><span data-t="en">of guests judge quality from the menu first</span><span data-t="ar">من الضيوف يحكمون على الجودة من القائمة</span><span data-t="de">der Gäste beurteilen die Qualität anhand der Karte</span></div>
+          <span class="fig-source">Cornell Hospitality Research</span>
         </div>
         <div class="fig">
-          <div class="fig-number">+23%</div>
-          <div class="fig-label"><span data-t="en">average order value with strategic layout</span><span data-t="ar">زيادة في متوسط قيمة الطلب</span><span data-t="de">höherer Bestellwert durch strategisches Layout</span></div>
+          <div class="fig-num">+23%</div>
+          <div class="fig-lbl"><span data-t="en">avg order value with strategic layout</span><span data-t="ar">زيادة في متوسط قيمة الطلب</span><span data-t="de">höherer Bestellwert durch strategisches Layout</span></div>
+          <span class="fig-source">Menu Engineering Studies</span>
         </div>
         <div class="fig">
-          <div class="fig-number">3×</div>
-          <div class="fig-label"><span data-t="en">higher guest return rate with bilingual menus</span><span data-t="ar">معدل أعلى لعودة الضيوف مع القوائم ثنائية اللغة</span><span data-t="de">mehr Wiederkehrgäste durch mehrsprachige Karten</span></div>
+          <div class="fig-num">3×</div>
+          <div class="fig-lbl"><span data-t="en">higher return rate with bilingual menus</span><span data-t="ar">معدل أعلى لعودة الضيوف مع القوائم ثنائية اللغة</span><span data-t="de">mehr Wiederkehrgäste durch mehrsprachige Karten</span></div>
+          <span class="fig-source">Hospitality Industry Data</span>
         </div>
         <div class="fig">
-          <div class="fig-number">100%</div>
-          <div class="fig-label"><span data-t="en">EU allergen compliance in every project</span><span data-t="ar">امتثال كامل للوائح المواد المسببة للحساسية</span><span data-t="de">EU-Allergen-Konformität in jedem Projekt</span></div>
+          <div class="fig-num">100%</div>
+          <div class="fig-lbl"><span data-t="en">EU allergen compliance in every project</span><span data-t="ar">امتثال كامل للوائح الحساسية الأوروبية</span><span data-t="de">EU-Allergen-Konformität in jedem Projekt</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ SERVICES ══════════════════ -->
+<!-- ══ IMAGE SECTION ══ -->
+<section class="img-sec">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <span class="sec-label"><span data-t="en">Crafted with precision</span><span data-t="ar">منفذ باتقان</span><span data-t="de">Mit Präzision gestaltet</span></span>
+      <h2 class="sec-h2"><span data-t="en">Real work, real <em>results</em></span><span data-t="ar">أعمال حقيقية، نتائج <em>حقيقية</em></span><span data-t="de">Echte Arbeit, echte <em>Ergebnisse</em></span></h2>
+    </div>
+    <!-- IMAGE GUIDE:
+      Upload these files to replace the placeholders.
+      Use: <img src="FILENAME" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+
+      img-01-menu-book-open.jpg
+      → Open luxury book menu on dark wood table · 900×1100px · Warm golden light · portrait
+      
+      img-02-arabic-typography.jpg
+      → Close-up of elegant Arabic calligraphy on cream paper · 800×600px · Macro · gold on dark
+      
+      img-03-table-setting.jpg
+      → Fine dining table setup — menu + crystal glasses + candlelight · 1200×800px · 45° angle
+      
+      img-04-qr-phone.jpg
+      → Hand scanning QR code at restaurant table with phone showing digital menu · 800×900px
+      
+      img-05-wall-menu.jpg
+      → Large wall menu with refined typography in premium restaurant · 1400×900px · landscape
+    -->
+    <div class="img-grid" style="margin-top:4rem">
+      <div class="img-card img-card-tall reveal">
+        <div class="img-placeholder">
+          <span class="img-placeholder-icon">I</span>
+          <span class="img-placeholder-file">img-01-menu-book-open.jpg</span>
+          <span class="img-placeholder-desc"><span data-t="en">Open luxury book menu · warm golden light · portrait</span><span data-t="ar">منيو دفتر فاخر مفتوح · ضوء ذهبي دافئ</span><span data-t="de">Aufgeschlagenes Luxus-Buchmenü · warmes Licht</span></span>
+        </div>
+        <div class="img-overlay"></div>
+        <div class="img-caption"><span data-t="en">Book Menu · Print</span><span data-t="ar">منيو دفتر · طباعة</span><span data-t="de">Buchmenü · Druck</span></div>
+      </div>
+      <div style="display:grid;gap:1.2rem">
+        <div class="img-card reveal d1">
+          <div class="img-placeholder">
+            <span class="img-placeholder-icon">II</span>
+            <span class="img-placeholder-file">img-02-arabic-typography.jpg</span>
+            <span class="img-placeholder-desc"><span data-t="en">Arabic calligraphy close-up · gold on dark</span><span data-t="ar">كلوز-أب خط عربي · ذهبي على داكن</span><span data-t="de">Arabische Kalligrafie-Nahaufnahme</span></span>
+          </div>
+          <div class="img-overlay"></div>
+          <div class="img-caption"><span data-t="en">Arabic Typography</span><span data-t="ar">خط عربي</span><span data-t="de">Arabische Typografie</span></div>
+        </div>
+        <div class="img-card reveal d2">
+          <div class="img-placeholder">
+            <span class="img-placeholder-icon">III</span>
+            <span class="img-placeholder-file">img-03-table-setting.jpg</span>
+            <span class="img-placeholder-desc"><span data-t="en">Fine dining table · menu + glasses + candles</span><span data-t="ar">طاولة راقية · منيو وكؤوس وشموع</span><span data-t="de">Feine Tischeindeckung · Menü + Gläser</span></span>
+          </div>
+          <div class="img-overlay"></div>
+          <div class="img-caption"><span data-t="en">Table Experience</span><span data-t="ar">تجربة الطاولة</span><span data-t="de">Tisch-Erlebnis</span></div>
+        </div>
+      </div>
+      <div style="display:grid;gap:1.2rem">
+        <div class="img-card reveal d1">
+          <div class="img-placeholder">
+            <span class="img-placeholder-icon">IV</span>
+            <span class="img-placeholder-file">img-04-qr-phone.jpg</span>
+            <span class="img-placeholder-desc"><span data-t="en">Hand scanning QR · phone showing Qairty digital menu</span><span data-t="ar">يد تمسح QR · موبايل يعرض Qairty</span><span data-t="de">QR-Scan · Smartphone zeigt Qairty</span></span>
+          </div>
+          <div class="img-overlay"></div>
+          <div class="img-caption">Qairty · QR</div>
+        </div>
+        <div class="img-card reveal d2">
+          <div class="img-placeholder">
+            <span class="img-placeholder-icon">V</span>
+            <span class="img-placeholder-file">img-05-wall-menu.jpg</span>
+            <span class="img-placeholder-desc"><span data-t="en">Large wall menu · refined typography · premium restaurant</span><span data-t="ar">منيو جداري كبير · طباعة راقية · مطعم فاخر</span><span data-t="de">Großes Wandmenü · edle Typografie</span></span>
+          </div>
+          <div class="img-overlay"></div>
+          <div class="img-caption"><span data-t="en">Wall Menu</span><span data-t="ar">منيو جداري</span><span data-t="de">Wandmenü</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
 <section class="services" id="services">
   <div class="container">
-    <div class="section-header reveal">
-      <span class="section-label"><span data-t="en">What you receive</span><span data-t="ar">ما ستحصل عليه</span><span data-t="de">Was Sie erhalten</span></span>
-      <h2 class="section-h2"><span data-t="en">Every detail <em>considered</em></span><span data-t="ar">كل تفصيل <em>مدروس</em></span><span data-t="de">Jedes Detail <em>durchdacht</em></span></h2>
+    <div style="text-align:center;margin-bottom:4.5rem" class="reveal">
+      <span class="sec-label"><span data-t="en">What you receive</span><span data-t="ar">ما ستحصل عليه</span><span data-t="de">Was Sie erhalten</span></span>
+      <h2 class="sec-h2"><span data-t="en">Every detail <em>considered</em></span><span data-t="ar">كل تفصيل <em>مدروس</em></span><span data-t="de">Jedes Detail <em>durchdacht</em></span></h2>
     </div>
-    <div class="services-row">
+    <div class="svc-grid">
       <div class="svc reveal">
         <div class="svc-num">01</div>
         <h4 class="svc-title"><span data-t="en">Multilingual Design</span><span data-t="ar">تصميم متعدد اللغات</span><span data-t="de">Mehrsprachiges Design</span></h4>
-        <p class="svc-desc bt"><span data-t="en">English, Arabic, and German — each language typographically precise, culturally calibrated, and brand-consistent.</span><span data-t="ar">إنجليزي وعربي وألماني — كل لغة دقيقة طباعياً، ومعايرة ثقافياً، ومتسقة مع الهوية.</span><span data-t="de">Englisch, Arabisch und Deutsch — jede Sprache typografisch präzise und markenkonsistent.</span></p>
+        <p class="svc-desc bt"><span data-t="en">English, Arabic, and German — each language typographically precise, culturally calibrated, brand-consistent.</span><span data-t="ar">إنجليزي وعربي وألماني — كل لغة دقيقة طباعياً ومعايرة ثقافياً.</span><span data-t="de">Englisch, Arabisch, Deutsch — jede Sprache typografisch präzise und markenkonsistent.</span></p>
       </div>
       <div class="svc reveal d1">
         <div class="svc-num">02</div>
         <h4 class="svc-title"><span data-t="en">EU Allergen Compliance</span><span data-t="ar">الامتثال الأوروبي للحساسية</span><span data-t="de">EU-Allergen-Konformität</span></h4>
-        <p class="svc-desc bt"><span data-t="en">Full allergen notation per EU Regulation 1169/2011 — legally accurate and aesthetically integrated.</span><span data-t="ar">نظام إشعارات المواد المسببة للحساسية وفق اللائحة الأوروبية — دقيق قانونياً ومتكامل بصرياً.</span><span data-t="de">Vollständiges Allergensystem gemäß EU-Verordnung 1169/2011 — rechtlich korrekt und ästhetisch integriert.</span></p>
+        <p class="svc-desc bt"><span data-t="en">Full allergen notation per EU Reg. 1169/2011 — legally accurate and aesthetically integrated.</span><span data-t="ar">نظام إشعارات كامل وفق اللائحة الأوروبية — دقيق قانونياً ومتكامل بصرياً.</span><span data-t="de">Vollständiges Allergensystem gemäß EU-Verordnung 1169/2011 — rechtlich korrekt integriert.</span></p>
       </div>
       <div class="svc reveal d2">
         <div class="svc-num">03</div>
-        <h4 class="svc-title"><span data-t="en">QR Ecosystem</span><span data-t="ar">نظام QR المتكامل</span><span data-t="de">QR-Ökosystem</span></h4>
-        <p class="svc-desc bt"><span data-t="en">Branded QR codes linking to your digital menu, embedded into every print format.</span><span data-t="ar">رموز QR مخصصة بهويتك تربط قائمتك الرقمية، مدمجة في كل تنسيقات الطباعة.</span><span data-t="de">Gebrandete QR-Codes für Ihre digitale Speisekarte — eingebettet in alle Druckformate.</span></p>
-      </div>
-      <div class="svc reveal d1">
-        <div class="svc-num">04</div>
         <h4 class="svc-title"><span data-t="en">Menu Psychology</span><span data-t="ar">علم نفس القائمة</span><span data-t="de">Menü-Psychologie</span></h4>
-        <p class="svc-desc bt"><span data-t="en">Strategic positioning of high-margin items and price presentation that naturally increases order value.</span><span data-t="ar">توضيع استراتيجي للأصناف الأعلى هامشاً وعرض الأسعار بطريقة ترفع قيمة الطلب بشكل طبيعي.</span><span data-t="de">Strategische Positionierung margenstarker Gerichte, die den Bestellwert natürlich steigert.</span></p>
+        <p class="svc-desc bt"><span data-t="en">Strategic positioning of high-margin items. Price presentation that naturally guides guests toward premium choices.</span><span data-t="ar">توضيع استراتيجي للأصناف الأعلى هامشاً يقود الضيف بشكل طبيعي.</span><span data-t="de">Strategische Positionierung margenstarker Gerichte, die den Bestellwert natürlich steigert.</span></p>
       </div>
-      <div class="svc reveal d2">
-        <div class="svc-num">05</div>
+      <div class="svc reveal">
+        <div class="svc-num">04</div>
         <h4 class="svc-title"><span data-t="en">Print Production</span><span data-t="ar">جاهز للطباعة</span><span data-t="de">Druckproduktion</span></h4>
         <p class="svc-desc bt"><span data-t="en">CMYK-optimized files with bleed and crop marks, ready for any print vendor in Europe or the GCC.</span><span data-t="ar">ملفات محسّنة للطباعة بمواصفات احترافية لأي مطبعة في أوروبا أو الخليج.</span><span data-t="de">CMYK-optimierte Dateien mit Beschnittzugabe — bereit für jeden Druckdienstleister.</span></p>
       </div>
-      <div class="svc reveal d3">
-        <div class="svc-num">06</div>
+      <div class="svc reveal d1">
+        <div class="svc-num">05</div>
         <h4 class="svc-title"><span data-t="en">Brand Extension</span><span data-t="ar">امتداد الهوية</span><span data-t="de">Markenerweiterung</span></h4>
-        <p class="svc-desc bt"><span data-t="en">Flyers, wall menus, posters, table cards — your visual identity consistent across every touchpoint.</span><span data-t="ar">فلايرات ومنيو جداري وبوسترات وبطاقات طاولة — هويتك البصرية ممتدة بتناسق في كل نقطة تواصل.</span><span data-t="de">Flyer, Wandmenüs, Poster, Tischkarten — Ihre Identität konsistent an jedem Touchpoint.</span></p>
+        <p class="svc-desc bt"><span data-t="en">Flyers, wall menus, posters, table cards — your visual identity consistent across every touchpoint.</span><span data-t="ar">فلايرات ومنيو جداري وبوسترات وبطاقات طاولة — هويتك البصرية ممتدة بتناسق.</span><span data-t="de">Flyer, Wandmenüs, Poster, Tischkarten — Ihre Identität konsistent an jedem Touchpoint.</span></p>
+      </div>
+      <div class="svc reveal d2">
+        <div class="svc-num">06</div>
+        <h4 class="svc-title"><span data-t="en">QR Ecosystem</span><span data-t="ar">نظام QR المتكامل</span><span data-t="de">QR-Ökosystem</span></h4>
+        <p class="svc-desc bt"><span data-t="en">Branded QR codes linking print to Qairty digital menu. Seamless for your guests, powerful for your brand.</span><span data-t="ar">رموز QR بهويتك تربط المطبوع بـ Qairty الرقمي. سهلة للضيف، قوية للعلامة.</span><span data-t="de">Gebrandete QR-Codes verbinden Print mit Qairty Digital — nahtlos für Gäste.</span></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ PORTFOLIO ══════════════════ -->
-<section class="portfolio-section" id="portfolio">
+<!-- ══ PORTFOLIO ══ -->
+<section class="portfolio" id="portfolio">
   <div class="container">
-    <div class="section-header reveal">
-      <span class="section-label"><span data-t="en">Selected projects</span><span data-t="ar">مشاريع مختارة</span><span data-t="de">Ausgewählte Projekte</span></span>
-      <h2 class="section-h2"><span data-t="en">Crafted for <em>distinction</em></span><span data-t="ar">مصنوع <em>للتميز</em></span><span data-t="de">Geschaffen für <em>Einzigartigkeit</em></span></h2>
+    <div style="text-align:center;margin-bottom:4.5rem" class="reveal">
+      <span class="sec-label"><span data-t="en">Selected projects</span><span data-t="ar">مشاريع مختارة</span><span data-t="de">Ausgewählte Projekte</span></span>
+      <h2 class="sec-h2"><span data-t="en">Made for <em>distinction</em></span><span data-t="ar">صُنع <em>للتميز</em></span><span data-t="de">Für <em>Einzigartigkeit</em></span></h2>
     </div>
-    <div class="portfolio-grid">
-
-      <!-- Card 1 — Book menu (menu-project-01.jpg) -->
-      <div class="pcard reveal" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+    <!-- IMAGE GUIDE for portfolio cards:
+      Card 1: img-01-menu-book-open.jpg
+      Card 2: img-06-flyers-stack.jpg → Stack of elegant menu flyers · flat lay · cream + gold + black
+      Card 3: img-05-wall-menu.jpg
+      Card 4: img-poster-arabic.jpg → Arabic promotional poster · bold, calligraphic
+      Card 5: img-04-qr-phone.jpg (Qairty)
+      Card 6: img-08-restaurant-ambience.jpg → Luxurious restaurant interior · warm lighting
+      Replace .menu-preview div with: <img src="FILENAME" style="width:100%;height:100%;object-fit:cover">
+    -->
+    <div class="pf-grid">
+      <div class="pcard reveal" onclick="goContact()">
         <div class="pcard-img">
-          <!-- REPLACE: <img src="menu-project-01.jpg" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"> -->
-          <div class="menu-preview"><div class="mp-sub"><span data-t="en">Book Menu</span><span data-t="ar">منيو دفتر</span><span data-t="de">Buchmenü</span></div><div class="mp-rule"></div><div class="mp-title" style="font-family:var(--serif);font-style:italic">À la carte</div><div class="mp-rule"></div></div>
+          <div class="menu-preview"><div class="mp-sub"><span data-t="en">Book Menu</span><span data-t="ar">منيو دفتر</span><span data-t="de">Buchmenü</span></div><div class="mp-rule"></div><div class="mp-title">À la carte</div></div>
         </div>
         <div class="pcard-meta">
-          <div class="pcard-region"><span data-t="en">Fine Dining</span><span data-t="ar">مطعم راقٍ</span><span data-t="de">Gehobenes Restaurant</span></div>
+          <div class="pcard-region"><span data-t="en">Fine Dining · Germany</span><span data-t="ar">مطعم راقٍ · ألمانيا</span><span data-t="de">Gehobene Gastronomie · Deutschland</span></div>
           <div class="pcard-name"><span data-t="en">Signature Book Menu</span><span data-t="ar">منيو دفتر التوقيع</span><span data-t="de">Signatur-Buchmenü</span></div>
           <div class="pcard-type"><span data-t="en">Print · EU Allergen Ready</span><span data-t="ar">طباعة · متوافق مع لوائح الحساسية</span><span data-t="de">Druck · EU-Allergenkonform</span></div>
         </div>
       </div>
-
-      <!-- Card 2 — Flyer menu (menu-project-02.jpg) -->
-      <div class="pcard reveal d1" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      <div class="pcard reveal d1" onclick="goContact()">
         <div class="pcard-img">
-          <!-- REPLACE: <img src="menu-project-02.jpg" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"> -->
-          <div class="menu-preview"><div class="mp-ar">قائمة الطعام</div><div class="mp-rule"></div><div class="mp-title">Flyer Menu</div><div class="mp-rule"></div></div>
+          <div class="menu-preview"><div class="mp-ar">قائمة الطعام</div><div class="mp-rule"></div><div class="mp-title">Bilingual</div></div>
         </div>
         <div class="pcard-meta">
-          <div class="pcard-region"><span data-t="en">Bilingual · AR / EN</span><span data-t="ar">عربي · إنجليزي</span><span data-t="de">Zweisprachig · AR / EN</span></div>
+          <div class="pcard-region"><span data-t="en">Bilingual · UAE</span><span data-t="ar">ثنائي اللغة · الإمارات</span><span data-t="de">Zweisprachig · VAE</span></div>
           <div class="pcard-name"><span data-t="en">Bilingual Flyer Menu</span><span data-t="ar">فلاير منيو ثنائي اللغة</span><span data-t="de">Zweisprachiges Flyer-Menü</span></div>
           <div class="pcard-type"><span data-t="en">Print · QR Integration</span><span data-t="ar">طباعة · نظام QR</span><span data-t="de">Druck · QR-Integration</span></div>
         </div>
       </div>
-
-      <!-- Card 3 — Wall menu (menu-project-03.jpg) -->
-      <div class="pcard reveal d2" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      <div class="pcard reveal d2" onclick="goContact()">
         <div class="pcard-img">
-          <!-- REPLACE: <img src="menu-project-03.jpg" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"> -->
-          <div class="menu-preview"><div class="mp-sub"><span data-t="en">Wall Menu</span><span data-t="ar">منيو جداري</span><span data-t="de">Wandmenü</span></div><div class="mp-rule"></div><div class="mp-title" style="font-family:var(--serif)">Display</div><div class="mp-rule"></div></div>
+          <div class="menu-preview"><div class="mp-sub"><span data-t="en">Wall Menu</span><span data-t="ar">منيو جداري</span><span data-t="de">Wandmenü</span></div><div class="mp-rule"></div><div class="mp-title">Large Format</div></div>
         </div>
         <div class="pcard-meta">
-          <div class="pcard-region"><span data-t="en">Large Format</span><span data-t="ar">طباعة كبيرة</span><span data-t="de">Großformat</span></div>
+          <div class="pcard-region"><span data-t="en">Large Format · Munich</span><span data-t="ar">طباعة كبيرة · ميونخ</span><span data-t="de">Großformat · München</span></div>
           <div class="pcard-name"><span data-t="en">Wall Menu Design</span><span data-t="ar">تصميم منيو جداري</span><span data-t="de">Wandmenü-Design</span></div>
-          <div class="pcard-type"><span data-t="en">Large Format Print Ready</span><span data-t="ar">جاهز للطباعة الكبيرة</span><span data-t="de">Großformat druckfertig</span></div>
+          <div class="pcard-type"><span data-t="en">Large Format · Print Ready</span><span data-t="ar">جاهز للطباعة الكبيرة</span><span data-t="de">Großformat druckfertig</span></div>
         </div>
       </div>
-
-      <!-- Card 4 — Poster 1 (menu-project-04.jpg) -->
-      <div class="pcard reveal" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      <div class="pcard reveal" onclick="goContact()">
         <div class="pcard-img">
-          <!-- REPLACE: <img src="menu-project-04.jpg" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"> -->
-          <div class="menu-preview"><div class="mp-sub" style="font-size:8px;opacity:.4">POSTER</div><div class="mp-rule"></div><div class="mp-title" style="font-family:var(--serif)">Campaign</div><div class="mp-rule"></div><div class="mp-ar" style="font-size:10px">بوستر إعلاني</div></div>
+          <div class="menu-preview"><div class="mp-ar">بوستر إعلاني</div><div class="mp-rule"></div><div class="mp-title">Campaign</div></div>
         </div>
         <div class="pcard-meta">
-          <div class="pcard-region"><span data-t="en">Promotional Poster</span><span data-t="ar">بوستر ترويجي</span><span data-t="de">Werbe-Poster</span></div>
-          <div class="pcard-name"><span data-t="en">Restaurant Poster Vol. 1</span><span data-t="ar">بوستر مطعم — الأول</span><span data-t="de">Restaurant-Poster Vol. 1</span></div>
-          <div class="pcard-type"><span data-t="en">Print · Social Media Ready</span><span data-t="ar">طباعة · جاهز لوسائل التواصل</span><span data-t="de">Druck · Social Media Ready</span></div>
+          <div class="pcard-region"><span data-t="en">Promotional · KSA</span><span data-t="ar">ترويجي · السعودية</span><span data-t="de">Werbung · Saudi-Arabien</span></div>
+          <div class="pcard-name"><span data-t="en">Arabic Poster Campaign</span><span data-t="ar">حملة بوسترات عربية</span><span data-t="de">Arabische Poster-Kampagne</span></div>
+          <div class="pcard-type"><span data-t="en">Print · Social Ready</span><span data-t="ar">طباعة · جاهز للسوشيال</span><span data-t="de">Druck · Social Media Ready</span></div>
         </div>
       </div>
-
-      <!-- Card 5 — Poster 2 (menu-project-05.jpg) -->
-      <div class="pcard reveal d1" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      <div class="pcard qairty-card reveal d1" onclick="goContact()">
         <div class="pcard-img">
-          <!-- REPLACE: <img src="menu-project-05.jpg" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"> -->
-          <div class="menu-preview"><div class="mp-sub" style="font-size:8px;opacity:.4">POSTER</div><div class="mp-rule"></div><div class="mp-title" style="font-family:var(--serif)">Special</div><div class="mp-rule"></div></div>
+          <div class="menu-preview qairty-prev">
+            <div class="mp-q">QAIRTY</div>
+            <div class="mp-rule"></div>
+            <div class="mp-title">Digital</div>
+          </div>
         </div>
         <div class="pcard-meta">
-          <div class="pcard-region"><span data-t="en">Promotional Poster</span><span data-t="ar">بوستر ترويجي</span><span data-t="de">Werbe-Poster</span></div>
-          <div class="pcard-name"><span data-t="en">Restaurant Poster Vol. 2</span><span data-t="ar">بوستر مطعم — الثاني</span><span data-t="de">Restaurant-Poster Vol. 2</span></div>
-          <div class="pcard-type"><span data-t="en">Print · Social Media Ready</span><span data-t="ar">طباعة · جاهز لوسائل التواصل</span><span data-t="de">Druck · Social Media Ready</span></div>
+          <div class="pcard-region"><span data-t="en">Qairty · Digital Menu</span><span data-t="ar">Qairty · منيو رقمي</span><span data-t="de">Qairty · Digitalmenü</span></div>
+          <div class="pcard-name"><span data-t="en">Digital Menu + WhatsApp</span><span data-t="ar">منيو رقمي + واتساب</span><span data-t="de">Digitales Menü + WhatsApp</span></div>
+          <div class="pcard-type"><span data-t="en">QR · Mobile · One-time fee</span><span data-t="ar">QR · موبايل · دفعة وحدة</span><span data-t="de">QR · Mobile · Einmalig</span></div>
         </div>
       </div>
-
-      <!-- Card 6 — Extra (menu-project-06.jpg) -->
-      <div class="pcard reveal d2" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      <div class="pcard reveal d2" onclick="goContact()">
         <div class="pcard-img">
-          <!-- REPLACE: <img src="menu-project-06.jpg" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"> -->
-          <div class="menu-preview"><div class="mp-ar">هوية بصرية</div><div class="mp-rule"></div><div class="mp-title"><span data-t="en">Brand</span><span data-t="ar">علامة</span><span data-t="de">Marke</span></div><div class="mp-rule"></div></div>
+          <div class="menu-preview"><div class="mp-ar">هوية بصرية</div><div class="mp-rule"></div><div class="mp-title">Identity</div></div>
         </div>
         <div class="pcard-meta">
-          <div class="pcard-region"><span data-t="en">Brand Collateral</span><span data-t="ar">مواد الهوية البصرية</span><span data-t="de">Marken-Materialien</span></div>
-          <div class="pcard-name"><span data-t="en">Visual Identity Extension</span><span data-t="ar">امتداد الهوية البصرية</span><span data-t="de">Visuelle Identität</span></div>
-          <div class="pcard-type"><span data-t="en">Print · Digital</span><span data-t="ar">طباعة · رقمي</span><span data-t="de">Druck · Digital</span></div>
+          <div class="pcard-region"><span data-t="en">Full Branding · Qatar</span><span data-t="ar">هوية كاملة · قطر</span><span data-t="de">Vollständiges Branding · Katar</span></div>
+          <div class="pcard-name"><span data-t="en">Visual Identity + Print + Qairty</span><span data-t="ar">هوية بصرية + طباعة + Qairty</span><span data-t="de">Visuelle Identität + Print + Qairty</span></div>
+          <div class="pcard-type"><span data-t="en">Print · Digital · Collateral</span><span data-t="ar">طباعة · رقمي · مواد هوية</span><span data-t="de">Druck · Digital · Marketingmaterial</span></div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ TESTIMONIALS ══════════════════ -->
-<section class="testimonials" id="testimonials">
+<!-- ══ TESTIMONIALS ══ -->
+<section class="testi" id="testimonials">
   <div class="container">
-    <div class="section-header reveal">
-      <span class="section-label"><span data-t="en">What clients say</span><span data-t="ar">ماذا يقول عملاؤنا</span><span data-t="de">Was Kunden sagen</span></span>
-      <h2 class="section-h2"><span data-t="en">Results that <em>speak</em></span><span data-t="ar">نتائج <em>تتحدث بنفسها</em></span><span data-t="de">Ergebnisse, die <em>sprechen</em></span></h2>
+    <div style="text-align:center;margin-bottom:4.5rem" class="reveal">
+      <span class="sec-label"><span data-t="en">Client results</span><span data-t="ar">نتائج العملاء</span><span data-t="de">Kundenergebnisse</span></span>
+      <h2 class="sec-h2"><span data-t="en">Results that <em>speak</em></span><span data-t="ar">نتائج <em>تتحدث</em></span><span data-t="de">Ergebnisse, die <em>sprechen</em></span></h2>
     </div>
     <div class="testi-grid">
       <div class="tcard reveal">
         <div class="tcard-stars">★★★★★</div>
-        <div class="tcard-quote bt"><span data-t="en">"The menu completely transformed how our guests perceive us. Orders on premium dishes increased within the first week."</span><span data-t="ar">"القائمة غيّرت طريقة نظر ضيوفنا إلينا تماماً. طلبات الأطباق المميزة زادت في الأسبوع الأول."</span><span data-t="de">"Die Speisekarte hat die Wahrnehmung unserer Gäste völlig verändert. Premium-Bestellungen stiegen bereits in der ersten Woche."</span></div>
-        <div class="tcard-author"><span data-t="en">Restaurant Owner · Germany</span><span data-t="ar">صاحب مطعم · ألمانيا</span><span data-t="de">Restaurantbesitzer · Deutschland</span></div>
+        <div class="tcard-quote bt">
+          <span data-t="en">"The menu completely transformed how our guests perceive us. Orders on premium dishes increased noticeably within the first week."</span>
+          <span data-t="ar">"القائمة غيّرت طريقة نظر ضيوفنا إلينا تماماً. طلبات الأطباق المميزة زادت في الأسبوع الأول."</span>
+          <span data-t="de">"Die Speisekarte hat die Wahrnehmung unserer Gäste völlig verändert. Premium-Bestellungen stiegen in der ersten Woche."</span>
+        </div>
+        <div class="tcard-author"><span data-t="en">Restaurant Owner · Frankfurt</span><span data-t="ar">صاحب مطعم · فرانكفورت</span><span data-t="de">Restaurantbesitzer · Frankfurt</span></div>
+        <div><span class="tcard-product print">Print Menu</span></div>
       </div>
       <div class="tcard reveal d1">
         <div class="tcard-stars">★★★★★</div>
-        <div class="tcard-quote bt"><span data-t="en">"Professional, fast, and the Arabic typography was flawless. Our Gulf guests finally feel at home."</span><span data-t="ar">"احترافي وسريع والطباعة العربية كانت لا تشوبها شائبة. ضيوفنا الخليجيون يشعرون أخيراً بالراحة."</span><span data-t="de">"Professionell, schnell und die arabische Typografie war makellos. Unsere Golf-Gäste fühlen sich endlich zuhause."</span></div>
-        <div class="tcard-author"><span data-t="en">F&B Manager · UAE</span><span data-t="ar">مدير الطعام والشراب · الإمارات</span><span data-t="de">F&B Manager · Vereinigte Arab. Emirate</span></div>
+        <div class="tcard-quote bt">
+          <span data-t="en">"Qairty solved our biggest problem — we had no menu at all. Now guests browse everything on their phone and order via WhatsApp. Simple, fast, professional."</span>
+          <span data-t="ar">"Qairty حل أكبر مشكلة عندنا — ما كان عندنا منيو أصلاً. هلق الضيوف يتصفحون كل شيء على تلفوناتهم ويطلبون على واتساب."</span>
+          <span data-t="de">"Qairty löste unser größtes Problem — wir hatten gar keine Speisekarte. Jetzt stöbern Gäste per Smartphone und bestellen per WhatsApp."</span>
+        </div>
+        <div class="tcard-author"><span data-t="en">F&B Manager · Dubai</span><span data-t="ar">مدير الطعام والشراب · دبي</span><span data-t="de">F&B Manager · Dubai</span></div>
+        <div><span class="tcard-product qairty">Qairty Digital</span></div>
       </div>
       <div class="tcard reveal d2">
         <div class="tcard-stars">★★★★★</div>
-        <div class="tcard-quote bt"><span data-t="en">"Wall menu, flyers, and a book menu — all in one cohesive brand identity. Exactly what we needed."</span><span data-t="ar">"منيو جداري وفلايرات ودفتر — جاء كل شيء بهوية بصرية واحدة متماسكة. بالضبط ما احتجناه."</span><span data-t="de">"Wandmenü, Flyer und ein Buchmenü — alles in einer kohärenten Marke. Genau das, was wir brauchten."</span></div>
+        <div class="tcard-quote bt">
+          <span data-t="en">"Arabic typography was flawless. Our Gulf guests finally feel at home — and the bilingual print menu matched the Qairty digital menu perfectly."</span>
+          <span data-t="ar">"الطباعة العربية كانت لا تشوبها شائبة. ضيوفنا الخليجيون يشعرون بالراحة — والمنيو المطبوع تطابق Qairty تماماً."</span>
+          <span data-t="de">"Die arabische Typografie war makellos. Unsere Golfgäste fühlen sich endlich zuhause — und das Druckmenü passte perfekt zu Qairty."</span>
+        </div>
         <div class="tcard-author"><span data-t="en">Restaurant Owner · Munich</span><span data-t="ar">صاحب مطعم · ميونخ</span><span data-t="de">Restaurantbesitzer · München</span></div>
+        <div><span class="tcard-product print">Print + Qairty Bundle</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ PRICING ══════════════════ -->
-<section class="pricing" id="pricing">
+<!-- ══ QAIRTY SECTION ══ -->
+<section class="qairty-section" id="qairty">
   <div class="container">
-    <div class="section-header reveal">
-      <span class="section-label"><span data-t="en">Investment</span><span data-t="ar">الاستثمار</span><span data-t="de">Investition</span></span>
-      <h2 class="section-h2"><span data-t="en">Choose your <em>package</em></span><span data-t="ar">اختر <em>باقتك</em></span><span data-t="de">Wählen Sie Ihr <em>Paket</em></span></h2>
-    </div>
-    <div class="pricing-grid">
+    <div class="q-inner">
+      <div class="reveal">
+        <div class="q-badge">
+          <span class="q-badge-dot"></span>
+          <span class="q-badge-text">Qairty — <span data-t="en">Digital Menu</span><span data-t="ar">منيو رقمي</span><span data-t="de">Digitalmenü</span></span>
+        </div>
+        <h2 class="q-h2">
+          <span data-t="en">No menu?<br>That's costing you<br><em>guests every day.</em></span>
+          <span data-t="ar">مافيك منيو؟<br>هاد يكلفك<br><em>زبائن كل يوم.</em></span>
+          <span data-t="de">Keine Speisekarte?<br>Das kostet Sie<br><em>täglich Gäste.</em></span>
+        </h2>
+        <p class="q-sub bt">
+          <span data-t="en">Qairty is a beautiful digital menu built specifically for your restaurant. Guests scan a QR code, browse all your dishes on their phone, and order directly via WhatsApp. No app download, no subscription — one payment, yours forever.</span>
+          <span data-t="ar">Qairty منيو رقمي جميل مبني خصيصاً لمطعمك. الضيف يمسح QR، يتصفح كل الأصناف على تلفونه، ويطلب مباشرة عبر واتساب. بلا تطبيق، بلا اشتراك — دفعة وحدة وخلص.</span>
+          <span data-t="de">Qairty ist eine schöne digitale Speisekarte für Ihr Restaurant. Gäste scannen einen QR-Code, sehen alle Gerichte auf dem Smartphone und bestellen direkt per WhatsApp. Keine App, kein Abo — einmalige Zahlung.</span>
+        </p>
+        <ul class="q-features">
+          <li><span class="q-check"></span><span class="bt"><span data-t="en">All dishes beautifully displayed — with photos & categories</span><span data-t="ar">كل أصنافك معروضة بشكل أنيق — مع صور وتصنيفات</span><span data-t="de">Alle Gerichte schön dargestellt — mit Fotos & Kategorien</span></span></li>
+          <li><span class="q-check"></span><span class="bt"><span data-t="en">One-tap WhatsApp order button</span><span data-t="ar">زر واتساب للطلب بضغطة</span><span data-t="de">WhatsApp-Bestellbutton mit einem Tippen</span></span></li>
+          <li><span class="q-check"></span><span class="bt"><span data-t="en">Printable branded QR code for table, door, or counter</span><span data-t="ar">QR بهويتك جاهز للطباعة للطاولة أو الباب</span><span data-t="de">Gedruckter QR-Code für Tisch, Tür oder Tresen</span></span></li>
+          <li><span class="q-check"></span><span class="bt"><span data-t="en">No monthly fees — one payment, yours forever</span><span data-t="ar">بلا رسوم شهرية — دفعة وحدة، ملكك للأبد</span><span data-t="de">Keine Monatsgebühren — einmalige Zahlung, für immer</span></span></li>
+          <li><span class="q-check"></span><span class="bt"><span data-t="en">Arabic · English · German — your language</span><span data-t="ar">عربي · إنجليزي · ألماني</span><span data-t="de">Arabisch · Englisch · Deutsch</span></span></li>
+          <li><span class="q-check"></span><span class="bt"><span data-t="en">Live in 3–5 business days</span><span data-t="ar">جاهز في 3–5 أيام عمل</span><span data-t="de">In 3–5 Werktagen live</span></span></li>
+        </ul>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap">
+          <a href="#qairty-pricing" class="btn-qairty">
+            <span data-t="en">See Qairty Plans</span><span data-t="ar">شاهد باقات Qairty</span><span data-t="de">Qairty-Pakete</span>
+          </a>
+          <a href="#contact" class="btn-outline">
+            <span data-t="en">Get Qairty</span><span data-t="ar">احصل على Qairty</span><span data-t="de">Qairty anfragen</span>
+          </a>
+        </div>
+      </div>
 
+      <div class="phone-wrap reveal d2">
+        <div class="phone-glow"></div>
+        <div class="phone">
+          <div class="phone-island"></div>
+          <div class="phone-screen">
+            <div class="ph-header">
+              <div class="ph-logo">مطعم الزيتون</div>
+              <div class="ph-name">Zeitoun Restaurant · Qairty</div>
+            </div>
+            <div class="ph-body">
+              <div class="ph-cats" id="phCats">
+                <button class="ph-cat-btn active" data-cat="all">🍽 <span data-t="en">All</span><span data-t="ar">الكل</span><span data-t="de">Alle</span></button>
+                <button class="ph-cat-btn" data-cat="start">🥗 <span data-t="en">Starters</span><span data-t="ar">مقبلات</span><span data-t="de">Vorspeisen</span></button>
+                <button class="ph-cat-btn" data-cat="main">🍖 <span data-t="en">Mains</span><span data-t="ar">رئيسي</span><span data-t="de">Hauptgang</span></button>
+                <button class="ph-cat-btn" data-cat="dessert">🍰 <span data-t="en">Desserts</span><span data-t="ar">حلى</span><span data-t="de">Desserts</span></button>
+              </div>
+              <div class="ph-item">
+                <div class="ph-img">🥙</div>
+                <div class="ph-info">
+                  <div class="ph-iname"><span data-t="en">Shawarma Plate</span><span data-t="ar">طبق شاورما</span><span data-t="de">Schawarma</span></div>
+                  <div class="ph-idesc"><span data-t="en">Chicken, garlic sauce, fries</span><span data-t="ar">دجاج، توم، بطاطا</span><span data-t="de">Hähnchen, Knoblauchsauce</span></div>
+                </div>
+                <div class="ph-price">€12.50</div>
+              </div>
+              <div class="ph-item">
+                <div class="ph-img">🥗</div>
+                <div class="ph-info">
+                  <div class="ph-iname"><span data-t="en">Fattoush Salad</span><span data-t="ar">سلطة فتوش</span><span data-t="de">Fattoush-Salat</span></div>
+                  <div class="ph-idesc"><span data-t="en">Fresh vegetables, sumac</span><span data-t="ar">خضار طازجة، سماق</span><span data-t="de">Frisches Gemüse, Sumach</span></div>
+                </div>
+                <div class="ph-price">€7.90</div>
+              </div>
+              <div class="ph-item">
+                <div class="ph-img">🍖</div>
+                <div class="ph-info">
+                  <div class="ph-iname"><span data-t="en">Mixed Grill</span><span data-t="ar">مشاوي مشكلة</span><span data-t="de">Gemischter Grill</span></div>
+                  <div class="ph-idesc"><span data-t="en">Kofta, chicken, lamb</span><span data-t="ar">كفتة، دجاج، لحم</span><span data-t="de">Kofta, Hähnchen, Lamm</span></div>
+                </div>
+                <div class="ph-price">€22.00</div>
+              </div>
+              <div class="ph-wa">
+                <span class="ph-wa-ico">💬</span>
+                <span class="ph-wa-txt"><span data-t="en">Order via WhatsApp</span><span data-t="ar">اطلب عبر واتساب</span><span data-t="de">Per WhatsApp bestellen</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ QAIRTY PRICING ══ -->
+<section class="q-pricing" id="qairty-pricing">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <span class="sec-label" style="color:var(--q-mint)">Qairty — <span data-t="en">Plans</span><span data-t="ar">الباقات</span><span data-t="de">Pakete</span></span>
+      <h2 class="sec-h2 qairty-h2"><span data-t="en">One payment. <em>No subscriptions.</em></span><span data-t="ar">دفعة وحدة. <em>بدون اشتراكات.</em></span><span data-t="de">Einmalig. <em>Kein Abo.</em></span></h2>
+    </div>
+    <div class="q-price-grid">
+      <div class="q-prc reveal">
+        <div class="q-tier">Qairty Basic</div>
+        <div class="q-price">$149</div>
+        <div class="q-once"><span data-t="en">One-time · no monthly fees</span><span data-t="ar">دفعة وحدة · بدون رسوم شهرية</span><span data-t="de">Einmalig · keine monatl. Gebühren</span></div>
+        <div class="q-rule"></div>
+        <ul class="q-feats">
+          <li><span data-t="en">Up to 20 items</span><span data-t="ar">حتى ٢٠ صنف</span><span data-t="de">Bis zu 20 Artikel</span></li>
+          <li><span data-t="en">Single language</span><span data-t="ar">لغة واحدة</span><span data-t="de">Eine Sprache</span></li>
+          <li><span data-t="en">WhatsApp order button</span><span data-t="ar">زر طلب واتساب</span><span data-t="de">WhatsApp-Bestellbutton</span></li>
+          <li><span data-t="en">QR code included</span><span data-t="ar">QR مرفق</span><span data-t="de">QR-Code enthalten</span></li>
+          <li><span data-t="en">Mobile optimized</span><span data-t="ar">محسّن للموبايل</span><span data-t="de">Mobile-optimiert</span></li>
+          <li><span data-t="en">Live in 3 business days</span><span data-t="ar">جاهز في 3 أيام</span><span data-t="de">In 3 Werktagen live</span></li>
+        </ul>
+        <button class="q-btn" onclick="selectQairty('Qairty Basic — $149')"><span data-t="en">Get Started</span><span data-t="ar">ابدأ الآن</span><span data-t="de">Loslegen</span></button>
+      </div>
+
+      <div class="q-prc feat reveal d1">
+        <div class="q-prc-badge"><span data-t="en">Most Popular</span><span data-t="ar">الأكثر طلباً</span><span data-t="de">Beliebtestes</span></div>
+        <div class="q-tier">Qairty Plus</div>
+        <div class="q-price">$249</div>
+        <div class="q-once"><span data-t="en">One-time · no monthly fees</span><span data-t="ar">دفعة وحدة · بدون رسوم شهرية</span><span data-t="de">Einmalig · keine monatl. Gebühren</span></div>
+        <div class="q-rule" style="background:var(--q-mint);opacity:.5"></div>
+        <ul class="q-feats">
+          <li><span data-t="en">Up to 50 items with categories</span><span data-t="ar">حتى ٥٠ صنف مع تصنيفات</span><span data-t="de">Bis zu 50 Artikel mit Kategorien</span></li>
+          <li><span data-t="en">2 languages</span><span data-t="ar">لغتان</span><span data-t="de">2 Sprachen</span></li>
+          <li><span data-t="en">Item photos supported</span><span data-t="ar">صور الأصناف مدعومة</span><span data-t="de">Artikelfotos unterstützt</span></li>
+          <li><span data-t="en">WhatsApp + Call button</span><span data-t="ar">واتساب + زر اتصال</span><span data-t="de">WhatsApp + Anruf-Button</span></li>
+          <li><span data-t="en">QR code + branded print card</span><span data-t="ar">QR + بطاقة طباعة مخصصة</span><span data-t="de">QR + gebrandete Druckkarte</span></li>
+          <li><span data-t="en">1 revision round</span><span data-t="ar">جولة تعديل</span><span data-t="de">1 Revisionsrunde</span></li>
+          <li><span data-t="en">Live in 3–5 business days</span><span data-t="ar">جاهز في 3–5 أيام</span><span data-t="de">In 3–5 Werktagen live</span></li>
+        </ul>
+        <button class="q-btn" onclick="selectQairty('Qairty Plus — $249')"><span data-t="en">Get Started</span><span data-t="ar">ابدأ الآن</span><span data-t="de">Loslegen</span></button>
+      </div>
+
+      <div class="q-prc reveal d2">
+        <div class="q-tier">Qairty + Print</div>
+        <div class="q-price">$490</div>
+        <div class="q-once"><span data-t="en">One-time · best value</span><span data-t="ar">دفعة وحدة · أفضل قيمة</span><span data-t="de">Einmalig · bestes Preis-Leistungs-V.</span></div>
+        <div class="q-rule"></div>
+        <ul class="q-feats">
+          <li><span data-t="en">Everything in Qairty Plus</span><span data-t="ar">كل ما في Qairty Plus</span><span data-t="de">Alles aus Qairty Plus</span></li>
+          <li><span data-t="en">+ Full printed menu design</span><span data-t="ar">+ تصميم منيو مطبوع كامل</span><span data-t="de">+ Vollständiges Druckmenü-Design</span></li>
+          <li><span data-t="en">Digital & print — one brand</span><span data-t="ar">رقمي ومطبوع — هوية واحدة</span><span data-t="de">Digital & Print — eine Marke</span></li>
+          <li><span data-t="en">CMYK print-ready files</span><span data-t="ar">ملفات CMYK جاهزة للطباعة</span><span data-t="de">CMYK-druckfertige Dateien</span></li>
+          <li><span data-t="en">2 revision rounds</span><span data-t="ar">جولتا تعديل</span><span data-t="de">2 Revisionsrunden</span></li>
+        </ul>
+        <button class="q-btn" onclick="selectQairty('Qairty + Print — $490')"><span data-t="en">Get Started</span><span data-t="ar">ابدأ الآن</span><span data-t="de">Loslegen</span></button>
+      </div>
+
+      <!-- PRO TIER — Kitchen Display System -->
+      <div class="q-prc-pro reveal">
+        <div class="q-pro-inner">
+          <div>
+            <div class="q-pro-badge">
+              <span style="width:5px;height:5px;border-radius:50%;background:var(--q-mint);display:inline-block;animation:blink 2s ease-in-out infinite"></span>
+              <span data-t="en">New · Qairty Pro</span>
+              <span data-t="ar">جديد · Qairty Pro</span>
+              <span data-t="de">Neu · Qairty Pro</span>
+            </div>
+            <div class="q-pro-title">
+              <span data-t="en">Qairty Pro + Kitchen Display</span>
+              <span data-t="ar">Qairty Pro + شاشة المطبخ</span>
+              <span data-t="de">Qairty Pro + Küchenanzeige</span>
+            </div>
+            <div class="q-pro-price">$890</div>
+            <div class="q-pro-note bt">
+              <span data-t="en">One-time · tablet device by client</span>
+              <span data-t="ar">دفعة وحدة · جهاز التابلت من العميل</span>
+              <span data-t="de">Einmalig · Tablet-Gerät vom Kunden</span>
+            </div>
+          </div>
+          <div>
+            <p class="q-pro-desc bt">
+              <span data-t="en">Everything in Qairty Plus — plus a dedicated Kitchen Display System. Orders arrive directly on a tablet inside your kitchen with sound alerts. No paper, no shouting, no missed orders. You supply the tablet, we handle the rest.</span>
+              <span data-t="ar">كل ما في Qairty Plus — بالإضافة لنظام شاشة المطبخ. الطلبات تصل مباشرة لتابلت داخل مطبخك مع تنبيهات صوتية. بلا ورق، بلا ضجة، بلا طلب فائت. أنت تشتري التابلت، نحن نتولى الباقي.</span>
+              <span data-t="de">Alles aus Qairty Plus — plus ein dediziertes Küchenanzeige-System. Bestellungen kommen direkt auf einem Tablet in Ihrer Küche mit Soundbenachrichtigungen an. Kein Papier, keine verpassten Bestellungen. Sie liefern das Tablet, wir kümmern uns um den Rest.</span>
+            </p>
+          </div>
+          <div>
+            <div class="q-pro-feat-grid">
+              <div class="q-pro-feat bt"><span data-t="en">Kitchen Display (KDS)</span><span data-t="ar">شاشة المطبخ</span><span data-t="de">Küchenanzeige (KDS)</span></div>
+              <div class="q-pro-feat bt"><span data-t="en">Sound order alerts</span><span data-t="ar">تنبيهات صوتية</span><span data-t="de">Ton-Bestellbenachrichtigungen</span></div>
+              <div class="q-pro-feat bt"><span data-t="en">Order management dashboard</span><span data-t="ar">لوحة إدارة الطلبات</span><span data-t="de">Bestellverwaltungs-Dashboard</span></div>
+              <div class="q-pro-feat bt"><span data-t="en">Unlimited menu items</span><span data-t="ar">عدد لا محدود من الأصناف</span><span data-t="de">Unbegrenzte Menüartikel</span></div>
+              <div class="q-pro-feat bt"><span data-t="en">3 languages</span><span data-t="ar">3 لغات</span><span data-t="de">3 Sprachen</span></div>
+              <div class="q-pro-feat bt"><span data-t="en">30-day support</span><span data-t="ar">دعم 30 يوماً</span><span data-t="de">30 Tage Support</span></div>
+            </div>
+            <br>
+            <a href="#contact" class="q-pro-btn" onclick="selectQairty('Qairty Pro + Kitchen Display — $890')">
+              <span data-t="en">Enquire about Qairty Pro →</span>
+              <span data-t="ar">استفسر عن Qairty Pro →</span>
+              <span data-t="de">Qairty Pro anfragen →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRINT PRICING ══ -->
+<section class="print-pricing" id="print-pricing">
+  <div class="container">
+    <div style="text-align:center" class="reveal">
+      <span class="sec-label"><span data-t="en">Print Design — Packages</span><span data-t="ar">التصميم المطبوع — الباقات</span><span data-t="de">Druckdesign — Pakete</span></span>
+      <h2 class="sec-h2"><span data-t="en">Choose your <em>package</em></span><span data-t="ar">اختر <em>باقتك</em></span><span data-t="de">Wählen Sie Ihr <em>Paket</em></span></h2>
+    </div>
+    <div class="print-grid">
       <div class="prc reveal">
         <div class="prc-tier"><span data-t="en">Launch</span><span data-t="ar">الإطلاق</span><span data-t="de">Launch</span></div>
         <div class="prc-price">$390</div>
@@ -574,9 +2094,8 @@ footer{background:var(--ink);padding:3rem;display:flex;align-items:center;justif
           <li><span data-t="en">QR integration</span><span data-t="ar">رمز QR</span><span data-t="de">QR-Integration</span></li>
           <li><span data-t="en">Print-ready files</span><span data-t="ar">ملفات للطباعة</span><span data-t="de">Druckfertige Dateien</span></li>
         </ul>
-        <button class="prc-btn" onclick="selectPkg('Launch')"><span data-t="en">Select</span><span data-t="ar">اختر</span><span data-t="de">Wählen</span></button>
+        <button class="prc-btn" onclick="selectPrint('Launch')"><span data-t="en">Select</span><span data-t="ar">اختر</span><span data-t="de">Wählen</span></button>
       </div>
-
       <div class="prc reveal d1">
         <div class="prc-tier"><span data-t="en">Growth</span><span data-t="ar">النمو</span><span data-t="de">Growth</span></div>
         <div class="prc-price">$690</div>
@@ -589,27 +2108,25 @@ footer{background:var(--ink);padding:3rem;display:flex;align-items:center;justif
           <li><span data-t="en">Flyer or poster</span><span data-t="ar">فلاير أو بوستر</span><span data-t="de">Flyer oder Poster</span></li>
           <li><span data-t="en">2 revision rounds</span><span data-t="ar">جولتا تعديل</span><span data-t="de">2 Revisionsrunden</span></li>
         </ul>
-        <button class="prc-btn" onclick="selectPkg('Growth')"><span data-t="en">Select</span><span data-t="ar">اختر</span><span data-t="de">Wählen</span></button>
+        <button class="prc-btn" onclick="selectPrint('Growth')"><span data-t="en">Select</span><span data-t="ar">اختر</span><span data-t="de">Wählen</span></button>
       </div>
-
-      <div class="prc featured reveal d2">
+      <div class="prc feat-dark reveal d2">
         <div class="prc-badge"><span data-t="en">Most Popular</span><span data-t="ar">الأكثر طلباً</span><span data-t="de">Beliebtestes</span></div>
         <div class="prc-tier"><span data-t="en">Signature</span><span data-t="ar">التوقيع</span><span data-t="de">Signature</span></div>
-        <div class="prc-price" style="color:var(--white)">$990</div>
+        <div class="prc-price">$990</div>
         <div class="prc-from"><span data-t="en">Starting at</span><span data-t="ar">يبدأ من</span><span data-t="de">Ab</span></div>
-        <div class="prc-rule" style="background:var(--gold);opacity:.5"></div>
+        <div class="prc-rule" style="opacity:.4"></div>
         <ul class="prc-features">
           <li><span data-t="en">Up to 32 pages</span><span data-t="ar">حتى ٣٢ صفحة</span><span data-t="de">Bis zu 32 Seiten</span></li>
           <li><span data-t="en">Full multilingual</span><span data-t="ar">متعدد اللغات كاملاً</span><span data-t="de">Vollständig mehrsprachig</span></li>
           <li><span data-t="en">Book + flyer + poster</span><span data-t="ar">دفتر + فلاير + بوستر</span><span data-t="de">Buch + Flyer + Poster</span></li>
           <li><span data-t="en">Menu psychology</span><span data-t="ar">استراتيجية القائمة</span><span data-t="de">Menüstrategie</span></li>
           <li><span data-t="en">EU allergen compliance</span><span data-t="ar">امتثال أوروبي كامل</span><span data-t="de">EU-Allergenkonformität</span></li>
-          <li><span data-t="en">QR ecosystem</span><span data-t="ar">نظام QR متكامل</span><span data-t="de">QR-Ökosystem</span></li>
-          <li><span data-t="en">20-day revisions</span><span data-t="ar">٢٠ يوماً من التعديلات</span><span data-t="de">20 Tage Revisionen</span></li>
+          <li><span data-t="en">QR to Qairty ecosystem</span><span data-t="ar">QR متصل بـ Qairty</span><span data-t="de">QR zum Qairty-Ökosystem</span></li>
+          <li><span data-t="en">20-day revisions</span><span data-t="ar">٢٠ يوماً للتعديلات</span><span data-t="de">20 Tage Revisionen</span></li>
         </ul>
-        <button class="prc-btn" onclick="selectPkg('Signature')"><span data-t="en">Select</span><span data-t="ar">اختر</span><span data-t="de">Wählen</span></button>
+        <button class="prc-btn" onclick="selectPrint('Signature')"><span data-t="en">Select</span><span data-t="ar">اختر</span><span data-t="de">Wählen</span></button>
       </div>
-
       <div class="prc reveal d3">
         <div class="prc-tier"><span data-t="en">Elite</span><span data-t="ar">النخبة</span><span data-t="de">Elite</span></div>
         <div class="prc-price">$1,490</div>
@@ -617,68 +2134,163 @@ footer{background:var(--ink);padding:3rem;display:flex;align-items:center;justif
         <div class="prc-rule"></div>
         <ul class="prc-features">
           <li><span data-t="en">Full hospitality branding</span><span data-t="ar">هوية ضيافة كاملة</span><span data-t="de">Vollständiges Hospitality-Branding</span></li>
-          <li><span data-t="en">Menu ecosystem</span><span data-t="ar">منظومة قوائم كاملة</span><span data-t="de">Menü-Ökosystem</span></li>
+          <li><span data-t="en">Complete menu ecosystem</span><span data-t="ar">منظومة قوائم كاملة</span><span data-t="de">Vollständiges Menü-Ökosystem</span></li>
           <li><span data-t="en">Wall menu + table cards</span><span data-t="ar">منيو جداري + بطاقات طاولة</span><span data-t="de">Wandmenü + Tischkarten</span></li>
-          <li><span data-t="en">Seasonal updates</span><span data-t="ar">تحديثات موسمية</span><span data-t="de">Saisonale Aktualisierungen</span></li>
+          <li><span data-t="en">Seasonal updates included</span><span data-t="ar">تحديثات موسمية مشمولة</span><span data-t="de">Saisonale Aktualisierungen enthalten</span></li>
           <li><span data-t="en">Brand strategy session</span><span data-t="ar">جلسة استراتيجية للعلامة</span><span data-t="de">Markenstrategie-Session</span></li>
         </ul>
-        <button class="prc-btn" onclick="selectPkg('Elite')"><span data-t="en">Select</span><span data-t="ar">اختر</span><span data-t="de">Wählen</span></button>
+        <button class="prc-btn" onclick="selectPrint('Elite')"><span data-t="en">Select</span><span data-t="ar">اختر</span><span data-t="de">Wählen</span></button>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ PROCESS ══════════════════ -->
+<!-- ══ FAQ ══ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:0" class="reveal">
+      <span class="sec-label"><span data-t="en">Common questions</span><span data-t="ar">الأسئلة الشائعة</span><span data-t="de">Häufige Fragen</span></span>
+      <h2 class="sec-h2"><span data-t="en">Everything you need to <em>know</em></span><span data-t="ar">كل ما تحتاج <em>معرفته</em></span><span data-t="de">Alles, was Sie <em>wissen</em> müssen</span></h2>
+    </div>
+    <div class="faq-grid" style="margin-top:4.5rem">
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="bt"><span data-t="en">How long does a print menu design take?</span><span data-t="ar">كم يستغرق تصميم المنيو المطبوع؟</span><span data-t="de">Wie lange dauert ein Druckmenü-Design?</span></span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a bt">
+          <span data-t="en">Typically 7–14 business days from the discovery brief to final files. The Signature and Elite packages include a 20-day revision window. Rush delivery is available — ask us.</span>
+          <span data-t="ar">عادةً 7–14 يوم عمل من البريف إلى الملفات النهائية. باقات Signature وElite تشمل نافذة تعديل 20 يوماً. التسليم العاجل متاح — اسألنا.</span>
+          <span data-t="de">Normalerweise 7–14 Werktage vom Brief bis zu den Enddateien. Signature und Elite beinhalten ein 20-tägiges Revisionsfenster. Express-Lieferung ist möglich — fragen Sie uns.</span>
+        </div>
+      </div>
+      <div class="faq-item reveal d1" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="bt"><span data-t="en">How does Qairty work exactly?</span><span data-t="ar">كيف يعمل Qairty بالضبط؟</span><span data-t="de">Wie funktioniert Qairty genau?</span></span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a bt">
+          <span data-t="en">We build a mobile-optimized menu page for your restaurant. You get a branded QR code to print and place anywhere. Guests scan it, browse your menu, and tap the WhatsApp button to order. You receive orders directly in WhatsApp — no app, no platform, no middleman.</span>
+          <span data-t="ar">نبني صفحة منيو محسّنة للموبايل لمطعمك. تحصل على QR بهويتك لطباعته وتضعه أينما تريد. الضيف يمسحه، يتصفح المنيو، يضغط واتساب للطلب. الطلبات تصلك مباشرة على واتساب — بلا تطبيق، بلا منصة، بلا وسيط.</span>
+          <span data-t="de">Wir erstellen eine mobiloptimierte Menüseite für Ihr Restaurant. Sie erhalten einen gebrandeten QR-Code. Gäste scannen ihn, stöbern im Menü und tippen den WhatsApp-Button. Bestellungen kommen direkt in WhatsApp — keine App, keine Plattform.</span>
+        </div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="bt"><span data-t="en">Do I need a developer for Qairty?</span><span data-t="ar">هل أحتاج مطور لـ Qairty؟</span><span data-t="de">Brauche ich einen Entwickler für Qairty?</span></span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a bt">
+          <span data-t="en">No. We handle everything — design, setup, and deployment. You send us your menu content and photos; we build and deliver. You receive a live link and a QR code, ready to use immediately.</span>
+          <span data-t="ar">لا. نحن نتولى كل شيء — التصميم والإعداد والنشر. ترسل لنا محتوى منيوك وصورك؛ نحن نبنيه ونسلمه. تحصل على رابط حي وQR جاهز للاستخدام فوراً.</span>
+          <span data-t="de">Nein. Wir übernehmen alles — Design, Einrichtung und Bereitstellung. Sie schicken uns Ihren Menüinhalt und Fotos; wir bauen und liefern. Sie erhalten einen Live-Link und einen QR-Code, sofort einsatzbereit.</span>
+        </div>
+      </div>
+      <div class="faq-item reveal d1" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="bt"><span data-t="en">Can I update my menu later?</span><span data-t="ar">هل يمكنني تحديث المنيو لاحقاً؟</span><span data-t="de">Kann ich das Menü später aktualisieren?</span></span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a bt">
+          <span data-t="en">Yes. For print menus, we quote updates as a separate job (usually fast and affordable). For Qairty, small updates (prices, item names) are included free of charge within 30 days. Larger menu changes are quoted separately.</span>
+          <span data-t="ar">نعم. للمنيوهات المطبوعة، نقدم عرواً للتحديثات كشغل منفصل (عادةً سريع وبأسعار معقولة). لـ Qairty، التحديثات الصغيرة (أسعار، أسماء أصناف) مجانية خلال 30 يوماً. التغييرات الكبيرة تُقدَّر منفصلة.</span>
+          <span data-t="de">Ja. Bei Druckmenüs kalkulieren wir Updates als separaten Auftrag (meist schnell und erschwinglich). Bei Qairty sind kleine Updates (Preise, Artikelnamen) innerhalb von 30 Tagen kostenlos enthalten. Größere Änderungen werden separat angeboten.</span>
+        </div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="bt"><span data-t="en">Do you work with restaurants outside Europe and the GCC?</span><span data-t="ar">هل تعملون مع مطاعم خارج أوروبا والخليج؟</span><span data-t="de">Arbeiten Sie auch außerhalb Europas und der GCC?</span></span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a bt">
+          <span data-t="en">Yes, we work globally. Our primary expertise is in European regulations, Arabic typography, and the GCC/MENA market — but we serve any restaurant that values quality, regardless of location.</span>
+          <span data-t="ar">نعم، نعمل عالمياً. خبرتنا الأساسية في اللوائح الأوروبية والخط العربي وسوق الخليج والشرق الأوسط — لكننا نخدم أي مطعم يُقدّر الجودة بغض النظر عن موقعه.</span>
+          <span data-t="de">Ja, wir arbeiten global. Unsere Kernkompetenz liegt in europäischen Vorschriften, arabischer Typografie und dem GCC/MENA-Markt — aber wir bedienen jedes Restaurant, das Qualität schätzt, unabhängig vom Standort.</span>
+        </div>
+      </div>
+      <div class="faq-item reveal d1" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="bt"><span data-t="en">What's included in the Bundle — Print + Qairty?</span><span data-t="ar">ماذا يشمل الباقة الكاملة — مطبوع + Qairty؟</span><span data-t="de">Was ist im Bundle — Print + Qairty enthalten?</span></span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a bt">
+          <span data-t="en">The Complete Restaurant Package ($890 instead of $1,239) includes our Signature Print Menu design plus Qairty Plus digital menu — both designed under the same brand identity so they look and feel perfectly consistent. This is our most recommended option for restaurants that want to make a strong first and lasting impression.</span>
+          <span data-t="ar">الباقة الكاملة للمطعم ($890 بدل $1,239) تشمل تصميم Signature للمنيو المطبوع بالإضافة لـ Qairty Plus الرقمي — كلاهما تحت هوية بصرية واحدة ليبدوا متناسقَين تماماً. هاي هي أكثر خيار نوصي فيه للمطاعم اللي تريد انطباعاً أول قوياً ودائماً.</span>
+          <span data-t="de">Das vollständige Restaurant-Paket ($890 statt $1.239) beinhaltet unser Signature-Druckmenü-Design plus Qairty Plus Digitalmenü — beide unter derselben Markenidentität gestaltet, damit sie perfekt konsistent aussehen und sich anfühlen. Das ist unsere meist empfohlene Option für Restaurants, die einen starken ersten und bleibenden Eindruck hinterlassen möchten.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROCESS ══ -->
 <section class="process" id="process">
   <div class="container">
-    <div class="section-header reveal">
-      <span class="section-label"><span data-t="en">How it works</span><span data-t="ar">كيف يعمل</span><span data-t="de">Wie es funktioniert</span></span>
-      <h2 class="section-h2"><span data-t="en">Brief to delivery <em>in 4 steps</em></span><span data-t="ar">من الفكرة إلى التسليم <em>في ٤ خطوات</em></span><span data-t="de">Von der Idee bis zur Lieferung <em>in 4 Schritten</em></span></h2>
+    <div style="text-align:center" class="reveal">
+      <span class="sec-label"><span data-t="en">How it works</span><span data-t="ar">كيف يعمل</span><span data-t="de">Wie es funktioniert</span></span>
+      <h2 class="sec-h2"><span data-t="en">Brief to delivery <em>in 4 steps</em></span><span data-t="ar">من الفكرة إلى التسليم <em>في ٤ خطوات</em></span><span data-t="de">Vom Brief zur Lieferung <em>in 4 Schritten</em></span></h2>
     </div>
     <div class="process-steps">
       <div class="pstep reveal">
         <div class="pstep-num">I</div>
         <h4 class="pstep-title"><span data-t="en">Discovery Brief</span><span data-t="ar">البريف الاستكشافي</span><span data-t="de">Discovery Brief</span></h4>
-        <p class="pstep-desc bt"><span data-t="en">You fill the form. We study your brand, market, and goals before any design begins.</span><span data-t="ar">تملأ النموذج. ندرس علامتك وسوقك وأهدافك قبل أي تصميم.</span><span data-t="de">Sie füllen das Formular. Wir analysieren Ihre Marke und Ziele.</span></p>
+        <p class="pstep-desc bt"><span data-t="en">Fill the form. We study your brand, market, and goals before any design begins.</span><span data-t="ar">املأ النموذج. ندرس علامتك وسوقك وأهدافك قبل أي تصميم.</span><span data-t="de">Formular ausfüllen. Wir analysieren Ihre Marke, Ihren Markt und Ihre Ziele.</span></p>
       </div>
       <div class="pstep reveal d1">
         <div class="pstep-num">II</div>
-        <h4 class="pstep-title"><span data-t="en">Strategy &amp; Concept</span><span data-t="ar">الاستراتيجية والمفهوم</span><span data-t="de">Strategie &amp; Konzept</span></h4>
-        <p class="pstep-desc bt"><span data-t="en">We develop the menu architecture and visual direction. A concept deck comes for your approval.</span><span data-t="ar">نطور بنية القائمة والتوجه البصري. يصلك ملف المفهوم للموافقة.</span><span data-t="de">Wir entwickeln die Menüarchitektur und ein Konzept-Deck zur Freigabe.</span></p>
+        <h4 class="pstep-title"><span data-t="en">Strategy & Concept</span><span data-t="ar">الاستراتيجية والمفهوم</span><span data-t="de">Strategie & Konzept</span></h4>
+        <p class="pstep-desc bt"><span data-t="en">We develop the menu architecture and visual direction. A concept comes for your approval.</span><span data-t="ar">نطور بنية القائمة والتوجه البصري. المفهوم يصلك للموافقة.</span><span data-t="de">Wir entwickeln Menüarchitektur und Konzept zur Freigabe.</span></p>
       </div>
       <div class="pstep reveal d2">
         <div class="pstep-num">III</div>
-        <h4 class="pstep-title"><span data-t="en">Design &amp; Refinement</span><span data-t="ar">التصميم والصقل</span><span data-t="de">Design &amp; Verfeinerung</span></h4>
-        <p class="pstep-desc bt"><span data-t="en">Full production delivered. Revisions managed through a shared review system.</span><span data-t="ar">يُسلَّم التصميم الكامل. التعديلات منظمة ومدارة عبر نظام مراجعة مشترك.</span><span data-t="de">Vollständiges Design geliefert. Revisionen werden strukturiert verwaltet.</span></p>
+        <h4 class="pstep-title"><span data-t="en">Design & Refinement</span><span data-t="ar">التصميم والصقل</span><span data-t="de">Design & Verfeinerung</span></h4>
+        <p class="pstep-desc bt"><span data-t="en">Full production delivered. Revisions managed through a shared review system — clean and fast.</span><span data-t="ar">يُسلَّم التصميم الكامل. التعديلات منظمة عبر نظام مراجعة مشترك.</span><span data-t="de">Vollständiges Design geliefert. Revisionen strukturiert und schnell.</span></p>
       </div>
       <div class="pstep reveal d3">
         <div class="pstep-num">IV</div>
         <h4 class="pstep-title"><span data-t="en">Final Delivery</span><span data-t="ar">التسليم النهائي</span><span data-t="de">Endlieferung</span></h4>
-        <p class="pstep-desc bt"><span data-t="en">Print-ready files and all assets in an organized package. Ready for your printer, same day.</span><span data-t="ar">ملفات الطباعة وجميع الأصول في حزمة منظمة. جاهز للمطبعة في نفس اليوم.</span><span data-t="de">Druckfertige Dateien in einem organisierten Paket. Noch am selben Tag druckbereit.</span></p>
+        <p class="pstep-desc bt"><span data-t="en">Print-ready files organized and delivered. For Qairty, your digital menu goes live the same day.</span><span data-t="ar">ملفات الطباعة منظمة ومسلّمة. لـ Qairty، منيوك الرقمي يشتغل بنفس اليوم.</span><span data-t="de">Druckfertige Dateien organisiert geliefert. Bei Qairty geht Ihr digitales Menü noch am selben Tag live.</span></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ URGENCY BAR ══════════════════ -->
+<!-- ══ URGENCY ══ -->
 <div class="urgency">
-  <p class="bt">
-    <span data-t="en"><strong>Limited slots this month</strong> — We take on 4 new projects per month to ensure quality. <a href="#contact">Reserve your spot →</a></span>
-    <span data-t="ar"><strong>أماكن محدودة هذا الشهر</strong> — نقبل ٤ مشاريع جديدة شهرياً لضمان الجودة. <a href="#contact">احجز مكانك</a></span>
-    <span data-t="de"><strong>Begrenzte Plätze diesen Monat</strong> — Wir nehmen 4 neue Projekte pro Monat an. <a href="#contact">Platz reservieren →</a></span>
-  </p>
+  <div class="urgency-inner">
+    <div class="urgency-dot"></div>
+    <p class="bt">
+      <span data-t="en"><strong>Limited slots this month</strong> — We take 4 new print projects per month to ensure quality. <a href="#contact">Reserve your spot →</a></span>
+      <span data-t="ar"><strong>أماكن محدودة هذا الشهر</strong> — نقبل ٤ مشاريع طباعة جديدة شهرياً لضمان الجودة. <a href="#contact">احجز مكانك</a></span>
+      <span data-t="de"><strong>Begrenzte Plätze diesen Monat</strong> — Wir nehmen 4 neue Druckprojekte pro Monat an. <a href="#contact">Platz reservieren →</a></span>
+    </p>
+    <div class="urgency-dot"></div>
+  </div>
 </div>
 
-<!-- ══════════════════ FORM ══════════════════ -->
+<!-- ══ FORM ══ -->
 <section class="form-section" id="contact">
   <div class="container-sm">
-    <div class="section-header reveal">
-      <span class="section-label"><span data-t="en">Start your project</span><span data-t="ar">ابدأ مشروعك</span><span data-t="de">Projekt starten</span></span>
-      <h2 class="section-h2"><span data-t="en">Tell us about your <em>restaurant</em></span><span data-t="ar">أخبرنا عن <em>مطعمك</em></span><span data-t="de">Erzählen Sie uns von Ihrem <em>Restaurant</em></span></h2>
+    <div style="text-align:center" class="reveal">
+      <span class="sec-label"><span data-t="en">Start your project</span><span data-t="ar">ابدأ مشروعك</span><span data-t="de">Projekt starten</span></span>
+      <h2 class="sec-h2"><span data-t="en">Tell us about your <em>restaurant</em></span><span data-t="ar">أخبرنا عن <em>مطعمك</em></span><span data-t="de">Erzählen Sie uns von Ihrem <em>Restaurant</em></span></h2>
     </div>
-    <div class="form-wrap reveal">
+    <div class="form-wrap reveal d1">
       <form id="theForm" novalidate>
+        <div class="fg">
+          <label><span data-t="en">What do you need?</span><span data-t="ar">ماذا تحتاج؟</span><span data-t="de">Was benötigen Sie?</span></label>
+          <div class="stabs">
+            <button type="button" class="stab active" onclick="switchService(this,'print')">
+              <span data-t="en">Print Menu</span><span data-t="ar">منيو مطبوع</span><span data-t="de">Druckmenü</span>
+            </button>
+            <button type="button" class="stab q-stab" onclick="switchService(this,'digital')">
+              Qairty <span data-t="en">Digital</span><span data-t="ar">رقمي</span><span data-t="de">Digital</span>
+            </button>
+            <button type="button" class="stab" onclick="switchService(this,'bundle')">
+              <span data-t="en">Complete Bundle</span><span data-t="ar">الباقة الكاملة</span><span data-t="de">Komplett-Bundle</span>
+            </button>
+          </div>
+        </div>
 
         <div class="form-row">
           <div class="fg">
@@ -720,13 +2332,23 @@ footer{background:var(--ink);padding:3rem;display:flex;align-items:center;justif
           </div>
         </div>
 
-        <div class="fg">
+        <div class="fg" id="pkg-section">
           <label><span data-t="en">Select Package</span><span data-t="ar">اختر الباقة</span><span data-t="de">Paket wählen</span></label>
-          <div class="pkg-grid">
+          <div class="pkg-grid" id="pkg-print">
             <input type="radio" name="pkg" id="p1" value="Launch — $390" class="pkg-radio"><label for="p1">Launch · $390</label>
             <input type="radio" name="pkg" id="p2" value="Growth — $690" class="pkg-radio"><label for="p2">Growth · $690</label>
-            <input type="radio" name="pkg" id="p3" value="Signature — $990" class="pkg-radio" checked><label for="p3">Signature · $990</label>
+            <input type="radio" name="pkg" id="p3" value="Signature — $990" class="pkg-radio" checked><label for="p3">Signature · $990 ✦</label>
             <input type="radio" name="pkg" id="p4" value="Elite — $1,490" class="pkg-radio"><label for="p4">Elite · $1,490</label>
+          </div>
+          <div class="pkg-grid" id="pkg-digital" style="display:none">
+            <input type="radio" name="pkg" id="d1" value="Qairty Basic — $149" class="pkg-radio"><label for="d1">Basic · $149</label>
+            <input type="radio" name="pkg" id="d2" value="Qairty Plus — $249" class="pkg-radio" checked><label for="d2">Plus · $249 ✦</label>
+            <input type="radio" name="pkg" id="d3" value="Qairty + Print — $490" class="pkg-radio"><label for="d3">+Print · $490</label>
+            <input type="radio" name="pkg" id="d4" value="Qairty Pro KDS — $890" class="pkg-radio"><label for="d4">Pro KDS · $890</label>
+          </div>
+          <div class="pkg-grid" id="pkg-bundle" style="display:none">
+            <input type="radio" name="pkg" id="b1" value="Complete Bundle — $890" class="pkg-radio" checked><label for="b1">Complete Bundle · $890 ✦ Save $349</label>
+            <input type="radio" name="pkg" id="b2" value="Custom Bundle — contact" class="pkg-radio"><label for="b2">Custom — Let's talk</label>
           </div>
         </div>
 
@@ -737,91 +2359,149 @@ footer{background:var(--ink);padding:3rem;display:flex;align-items:center;justif
 
         <button type="submit" class="submit-btn" id="f_btn">
           <span id="f_btn_text">
-            <span data-t="en">Send Brief →</span><span data-t="ar">إرسال البريف ←</span><span data-t="de">Brief senden →</span>
+            <span data-t="en">Send Brief →</span><span data-t="ar">إرسال البريف →</span><span data-t="de">Brief senden →</span>
           </span>
         </button>
         <p class="form-note bt">
-          <span data-t="en">We respond within 1 business day · Completely confidential</span>
-          <span data-t="ar">نرد خلال يوم عمل واحد · سري تماماً</span>
-          <span data-t="de">Antwort innerhalb 1 Werktags · Vollständig vertraulich</span>
+          <span data-t="en">We respond within 1 business day · Completely confidential · No commitment required</span>
+          <span data-t="ar">نرد خلال يوم عمل واحد · سري تماماً · بدون التزام</span>
+          <span data-t="de">Antwort innerhalb 1 Werktags · Vollständig vertraulich · Kein Engagement erforderlich</span>
         </p>
       </form>
 
       <div class="success-box" id="successBox">
         <div class="success-icon">✦</div>
         <h3><span data-t="en">Brief received.</span><span data-t="ar">تم استلام البريف.</span><span data-t="de">Brief erhalten.</span></h3>
-        <p class="bt"><span data-t="en">We'll review your project and respond within one business day with a tailored proposal.</span><span data-t="ar">سنراجع مشروعك ونرد خلال يوم عمل بعرض مخصص.</span><span data-t="de">Wir prüfen Ihr Projekt und antworten innerhalb eines Werktags mit einem Angebot.</span></p>
+        <p class="bt">
+          <span data-t="en">We'll review your project and respond within one business day with a tailored proposal.</span>
+          <span data-t="ar">سنراجع مشروعك ونرد خلال يوم عمل بعرض مخصص.</span>
+          <span data-t="de">Wir prüfen Ihr Projekt und antworten innerhalb eines Werktags mit einem maßgeschneiderten Angebot.</span>
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════ FOOTER ══════════════════ -->
+<!-- ══ FOOTER ══ -->
 <footer>
   <div class="footer-logo">Devency</div>
-  <div class="footer-langs"><span>EN</span><span>عر</span><span>DE</span></div>
-  <div class="footer-right">Europe · GCC · Arab World</div>
+  <div class="footer-mid">
+    <span>Europe</span>
+    <span style="opacity:.3">·</span>
+    <span>GCC</span>
+    <span style="opacity:.3">·</span>
+    <span>Arab World</span>
+  </div>
+  <div class="footer-right">EN · عر · DE</div>
 </footer>
 
-<!-- ══════════════════ STICKY CTA ══════════════════ -->
+<!-- ══ STICKY ══ -->
 <div class="sticky" id="stk">
   <a href="#contact">
     <span class="sticky-dot"></span>
-    <span data-t="en">Get a Quote</span><span data-t="ar">احصل على عرض</span><span data-t="de">Angebot anfragen</span>
+    <span data-t="en">Get a Quote</span>
+    <span data-t="ar">احصل على عرض</span>
+    <span data-t="de">Angebot anfragen</span>
   </a>
 </div>
 
 <script>
-/* ── NAV SCROLL ── */
-const nav=document.getElementById('mainNav'),stk=document.getElementById('stk');
+/* ── NAV & SCROLL ── */
+const nav=document.getElementById('mainNav');
+const stk=document.getElementById('stk');
+let annVisible=true;
 window.addEventListener('scroll',()=>{
+  const offset=annVisible?36:0;
   nav.classList.toggle('scrolled',window.scrollY>60);
   stk.classList.toggle('show',window.scrollY>500);
 },{passive:true});
 
-/* ── REVEAL ON SCROLL ── */
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+function closeAnn(){
+  document.getElementById('annBar').style.display='none';
+  nav.style.top='0';
+  annVisible=false;
+}
+
+/* ── REVEAL ── */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+}),{threshold:.07});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* ════════════════════════════════════════════
-   LANGUAGE SWITCHER
-   Rule: ONLY text changes. Layout never moves.
-   Body direction stays LTR at all times.
-════════════════════════════════════════════ */
+/* ── LANGUAGE ── */
 function setLang(l){
   document.body.setAttribute('data-lang',l);
   document.documentElement.lang=l==='ar'?'ar':l==='de'?'de':'en';
-  const labels={en:'EN',ar:'عر',de:'DE'};
+  const map={en:'EN',ar:'عر',de:'DE'};
   document.querySelectorAll('.lang-btn').forEach(b=>{
-    b.classList.toggle('active',b.textContent.trim()===labels[l]);
+    b.classList.toggle('active',b.textContent.trim()===map[l]);
   });
 }
 
-/* ════════════════════════════════════════════
-   PRICING BUTTONS
-   Each "Select" → checks the matching radio
-   in the form, then scrolls to #contact
-════════════════════════════════════════════ */
-function selectPkg(name){
+/* ── FAQ ── */
+function toggleFaq(el){
+  const isOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)el.classList.add('open');
+}
+
+/* ── SERVICE TABS ── */
+function switchService(btn,type){
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pkg-print').style.display='none';
+  document.getElementById('pkg-digital').style.display='none';
+  document.getElementById('pkg-bundle').style.display='none';
+  if(type==='print') document.getElementById('pkg-print').style.display='grid';
+  else if(type==='digital') document.getElementById('pkg-digital').style.display='grid';
+  else document.getElementById('pkg-bundle').style.display='grid';
+}
+
+/* ── PRICING SHORTCUTS ── */
+function selectPrint(name){
   const map={Launch:'p1',Growth:'p2',Signature:'p3',Elite:'p4'};
+  document.getElementById('pkg-print').style.display='grid';
+  document.getElementById('pkg-digital').style.display='none';
+  document.getElementById('pkg-bundle').style.display='none';
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.stab')[0].classList.add('active');
   const r=document.getElementById(map[name]);
-  if(r) r.checked=true;
+  if(r)r.checked=true;
+  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+}
+function selectQairty(name){
+  const map={'Qairty Basic — $149':'d1','Qairty Plus — $249':'d2','Qairty + Print — $490':'d3','Qairty Pro + Kitchen Display — $890':'d4'};
+  document.getElementById('pkg-print').style.display='none';
+  document.getElementById('pkg-digital').style.display='grid';
+  document.getElementById('pkg-bundle').style.display='none';
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.stab')[1].classList.add('active');
+  const r=document.getElementById(map[name]);
+  if(r)r.checked=true;
+  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+}
+function selectBundle(){
+  document.getElementById('pkg-print').style.display='none';
+  document.getElementById('pkg-digital').style.display='none';
+  document.getElementById('pkg-bundle').style.display='grid';
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.stab')[2].classList.add('active');
+  document.getElementById('b1').checked=true;
+  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+}
+function goContact(){
   document.getElementById('contact').scrollIntoView({behavior:'smooth'});
 }
 
-/* ════════════════════════════════════════════
-   FORM — Web3Forms
-   Get your free access key at web3forms.com
-   Replace YOUR_KEY below with your real key.
-════════════════════════════════════════════ */
-const W3F='YOUR_KEY';
+/* ── FORM ── */
+const W3F='YOUR_WEB3FORMS_KEY';
 document.getElementById('theForm').addEventListener('submit',async function(e){
   e.preventDefault();
   const ids=['f_first','f_last','f_email','f_country','f_lang'];
   let ok=true;
   ids.forEach(id=>{
     const el=document.getElementById(id);
-    if(!el.value.trim()){el.style.borderColor='rgba(200,80,60,.55)';ok=false}
+    if(!el.value.trim()){el.style.borderColor='rgba(200,80,60,.5)';ok=false}
     else el.style.borderColor='';
   });
   if(!ok)return;
@@ -849,13 +2529,23 @@ document.getElementById('theForm').addEventListener('submit',async function(e){
     if(d.success){
       document.getElementById('theForm').style.display='none';
       document.getElementById('successBox').classList.add('show');
-    }else throw 0;
+    } else throw 0;
   }catch{
     txt.innerHTML='<span data-t="en">Error — please try again</span>';
     btn.disabled=false;
   }
 });
-document.querySelectorAll('input,select,textarea').forEach(el=>el.addEventListener('input',()=>el.style.borderColor=''));
+document.querySelectorAll('input,select,textarea').forEach(el=>
+  el.addEventListener('input',()=>el.style.borderColor='')
+);
+
+/* ── PHONE TABS ── */
+document.querySelectorAll('#phCats .ph-cat-btn').forEach(b=>{
+  b.addEventListener('click',function(){
+    document.querySelectorAll('#phCats .ph-cat-btn').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
 </script>
 </body>
 </html>
